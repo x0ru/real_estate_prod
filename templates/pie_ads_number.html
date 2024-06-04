@@ -1,0 +1,77 @@
+<html>
+
+<body>
+    <div id="container1" style="width:570px;"></div>
+    <script>
+
+
+        var pie1 = new ej.charts.AccumulationChart({
+
+            //Initializing Series
+            series: [
+                {
+                    dataSource: [
+
+                        {% for i in data[1] %}
+                        {% if i[0] != "N/A" %}
+
+                        { color: 'red',
+                        'x': {% if i[0] == "Krzesławickie" %}
+                        '{{ "Wzgórza Krzesławickie" }}'
+                        {% elif i[0] == "Czerwony" %}
+                        '{{ "Prądnik Czerwony" }}'
+                        {% elif i[0] == "Biały" %}
+                        '{{ "Prądnik Biały" }}'
+                        {% elif i[0] == "Duchackie" %}
+                        '{{ "Podgórze Duchackie" }}'
+                        {% elif i[0] == "Fałęcki" %}
+                        '{{ "Borek Fałęcki" }}'
+                        {% elif i[0] == 'Huta' %}
+                        '{{ "Nowa Huta" }}'
+                        {% else %}
+                        '{{ i[0] }}'
+                        {% endif %},
+                        {% if data[2][0]|length == 3 %}
+                        y: {{ i[4] }} },
+                        {%  else %}
+                        y: {{ i[3] }} },
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
+
+                    ],
+
+                    pointColorMapping: 'fill',
+
+
+                    dataLabel: {
+                        visible: true,
+                        position: 'Outside',
+                        name: 'x',
+                        font: {fontFamily: 'Segoe UI', size:'16', color: '#fdfffc'},
+                    },
+                    xName: 'x',
+                    yName: 'y',
+                    radius: '60%',
+                    innerRadius: '50%'
+
+                }
+            ],
+
+
+        legendSettings: {
+        visible: false,
+        },
+
+        background: '#000813',
+
+        tooltip: { enable: true},
+
+        });
+        pie1.appendTo('#container1');
+
+
+    </script>
+</body>
+
+</html>

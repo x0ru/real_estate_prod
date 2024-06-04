@@ -1,0 +1,41 @@
+       <table class="table table-hover table-sm mt-5 text-primary">
+  <thead>
+    <tr class="table-success">
+      <th scope="col" class="text-center">#</th>
+      <th scope="col" class="text-center" >Dzielnica</th>
+      <th scope="col" class="text-center">Średnia cena za m2</th>
+      <th scope="col" class="text-center">Średnia cena</th>
+        <th scope="col" class="text-center">Średnia powierzchnia</th>
+        <th scope="col" class="text-center">Liczba ogłoszeń</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for i in data[1] %}
+{% if i[0] != "N/A" %}
+    <tr class="table-success">
+      <th scope="row" class="text-center">{{ loop.index }}</th>
+        {% if i[0] == "Krzesławickie" %}
+        <td class="text-center">{{ "Wzgórza Krzesławickie" }}</td>
+        {% elif i[0] == "Czerwony" %}
+        <td class="text-center">{{ "Prądnik Czerwony" }}</td>
+        {% elif i[0] == "Biały" %}
+        <td class="text-center">{{ "Prądnik Biały" }}</td>
+        {% elif i[0] == "Duchackie" %}
+        <td class="text-center">{{ "Podgórze Duchackie" }}</td>
+        {% elif i[0] == "Fałęcki" %}
+        <td class="text-center">{{ "Borek Fałęcki" }}</td>
+        {% elif i[0] == "Huta" %}
+        <td class="text-center">{{ "Nowa Huta" }}</td>
+        {% else %}
+      <td class="text-center">{{ i[0] }}</td>
+        {% endif %}
+
+      <td class="text-center">{{ "{:,}".format(i[1]|int) }} zł</td>
+      <td class="text-center">{{ "{:,}".format(i[2]|int) }} zł</td>
+        <td class="text-center">{{ i[3]|int }} m2</td>
+        <td class="text-center">{{ i[4] }}</td>
+    </tr>
+{% endif %}
+  {% endfor %}
+    </tbody>
+</table>

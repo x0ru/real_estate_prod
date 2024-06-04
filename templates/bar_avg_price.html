@@ -1,0 +1,92 @@
+<html>
+
+<body>
+    <div id="container" style="width:570px;"></div>
+    <script>
+
+
+var chartData = [
+    {% for i in data[1] %}
+                        {% if i[0] != "N/A" %}
+
+                        { 'x': {% if i[0] == "Krzesławickie" %}
+                        '{{ "Wzgórza Krzesławickie" }}'
+                        {% elif i[0] == "Czerwony" %}
+                        '{{ "Prądnik Czerwony" }}'
+                        {% elif i[0] == "Biały" %}
+                        '{{ "Prądnik Biały" }}'
+                        {% elif i[0] == "Duchackie" %}
+                        '{{ "Podgórze Duchackie" }}'
+                        {% elif i[0] == "Fałęcki" %}
+                        '{{ "Borek Fałęcki" }}'
+                        {% elif i[0] == 'Huta' %}
+                        '{{ "Nowa Huta" }}'
+                        {% else %}
+                        '{{ i[0] }}'
+                        {% endif %},
+
+                        y: {{ i[1]|int }} },
+                        {% endif %}
+                        {% endfor %}
+];
+
+        var chart = new ej.charts.Chart({
+    primaryXAxis: {
+        valueType: 'Category',
+        lineStyle: { width: 0 },
+        majorGridLines: { width: 0 },
+        majorTickLines: { width: 0 },
+        minorTickLines: { width: 0 },
+         labelStyle: {
+               size:'16',
+               color: '#fdfffc',
+               fontFamily: 'Segoe UI',
+              } ,
+    },
+    primaryYAxis: {
+    lineStyle: { width: 0 },
+        majorTickLines: { width: 0 },
+        minorTickLines: { width: 0 },
+        minimum: 0, maximum: {{ data[1][0][1] }},
+        interval: 5000,
+        labelFormat: '{value} zł',
+        majorGridLines: { width: 0 },
+        labelStyle: {
+               fontWeight: '450',
+               size:'14',
+               color: '#000813',
+               fontFamily: 'SanSerif',
+              } ,
+    },
+
+    background: '#000813',
+
+    palettes: ["#003566"],
+
+    chartArea: {
+            border: {
+                width: 0
+            }
+        },
+
+    series:[{
+        dataSource: chartData,
+        xName: 'x', yName: 'y',
+        type: 'Bar',
+        marker: {
+                    visible: true,
+                    shape: 'Diamond',
+                    height: 10,
+                    width: 10,
+                    dataLabel: { visible: true, position: 'Middle', font: {fontWeight: 500, fontFamily: 'Segoe UI', size:'16',color: '#fdfffc'}, },
+                }
+    }],
+
+});
+chart.appendTo("#container")
+
+
+    </script>
+</body>
+
+</html>

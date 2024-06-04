@@ -1,0 +1,214 @@
+.parent {
+  position: relative;
+  top: 0;
+  left: 0;
+  scale: 160%;
+  text-align: center;
+}
+.bronowice {
+  position: absolute;
+  top: 106px;
+  left: 106px;
+  border: solid;
+  text-align: center;
+  z-index: -1;
+}
+.pradnik_bialy {
+  position: absolute;
+  top: 65px;
+  left: 187px;
+  z-index: -1;
+}
+.zwierzyniec {
+  position: absolute;
+  top: 155px;
+  left: 93px;
+  z-index: -1;
+}
+.debniki {
+  position: absolute;
+  top: 250px;
+  left: 70px;
+  z-index: -1;
+}
+.krowodrza{
+  position: absolute;
+  top: 171px;
+  left: 204px;
+  z-index: -1;
+}
+.stare_miasto {
+  position: absolute;
+  top: 191px;
+  left: 245px;
+  scale: 110%;
+  z-index: -1;
+}
+.pradnik_czerwony {
+  position: absolute;
+  top: 103px;
+  left: 259px;
+  scale: 109%;
+  z-index: -1;
+}
+.grzegorzki {
+  position: absolute;
+  top: 153px;
+  left: 255px;
+  scale: 116%;
+  z-index: -1;
+}
+.swoszowice {
+  position: absolute;
+  top: 323px;
+  left: 208px;
+  scale: 103%;
+  z-index: -1;
+}
+.borek_falecki_lagiewniki {
+  position: absolute;
+  top: 267px;
+  left: 176px;
+  z-index: -1;
+}
+.podgorze_duchackie {
+  position: absolute;
+  top: 273px;
+  left: 244px;
+  scale: 106%;
+  z-index: -1;
+}
+.podgorze {
+  position: absolute;
+  top: 214px;
+  left: 276px;
+  scale: 105%;
+  z-index: -1;
+}
+.biezanow {
+  position: absolute;
+  top: 271px;
+  left: 316px;
+  z-index: -1;
+}
+.czyzyny {
+  position: absolute;
+  top: 155px;
+  left: 318px;
+  scale: 110%;
+  z-index: -1;
+}
+.nowa_huta {
+  position: absolute;
+  top: 35px;
+  left: 373px;
+  scale: 102%;
+  z-index: -1;
+}
+.wzgorza_krzeslawickie {
+  position: absolute;
+  top: 88px;
+  left: 442px;
+  scale: 105%;
+  z-index: -1;
+}
+.bienczyce {
+  position: absolute;
+  top: 150px;
+  left: 374px;
+  scale: 112%;
+  z-index: -1;
+}
+
+.mistrzejowice {
+  position: absolute;
+  top: 120px;
+  left: 335px;
+  scale: 110%;
+  z-index: -1;
+}
+
+
+
+.bronowice-text {
+left: 200px;
+}
+
+
+.bronowice-text {
+   position: absolute;
+   top: 190px;
+   left: 150px;
+   width: 100%;
+}
+
+.pradnik_bialy-text {
+    position: absolute;
+    color: green;
+   top: 160px;
+   left: 210px;
+   width: 100%;
+}
+
+
+.smaller_font {
+font-size: 100px important!;
+}
+
+.my_class {
+font-size: 100px;
+}
+
+.col-1-5 {
+  @extend .extra-col;
+  flex: 0 0 11.5%;
+  max-width: 11.5%;
+  margin-right: 5px;
+}
+.col-1-25 {
+  @extend .extra-col;
+  flex: 0 0 11%;
+  max-width: 11%;
+  margin-right: 5px;
+}
+
+.col-1-1 {
+  @extend .extra-col;
+  flex: 0 0 9%;
+  max-width: 9%;
+  margin-right: 5px;
+}
+
+.btn-md {
+width: 120px;
+}
+
+.btn-top-height-gg {
+height: 50px;
+}
+
+.top-button-city{
+width: 200px;
+margin-right: 20px;
+
+}
+
+
+
+.all-page {
+    background-image: url('../assets/img/landing.jpg');
+    background-repeat:no-repeat;
+    background-size:cover;
+}
+
+.card{
+background-color: #000814
+}
+
+.table-success,
+.table-success > th,
+.table-success > td {
+background-color: #000814;
+border-top: #001d3d solid 1px !important;
+border-bottom: #001d3d solid 1px !important;
+}

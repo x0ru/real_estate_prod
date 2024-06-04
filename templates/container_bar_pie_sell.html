@@ -1,0 +1,21 @@
+<div class="card-group mt-5 text-primary">
+  <div class="card">
+    <div class="card-body text-center">
+      <div class="card-header">
+      <h4>{{ "{:,}".format(data[2][0][0]|int)}} zł/m2 </h4>
+      <p> Średnia cena za metr kwadratowy</p>
+      </div>
+      {% include 'bar_avg_price.html'%}
+
+    </div>
+  </div>
+          <div class="card">
+    <div class="card-body text-center">
+      <div class="card-header">
+      <h4>{{ data[2][0][2] }}</h4>
+        <p>Liczba Ogłoszeń</p>
+      </div>
+    {% include 'pie_ads_number.html'%}
+    </div>
+          </div>
+        </div>

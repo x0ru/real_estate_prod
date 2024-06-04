@@ -1,0 +1,176 @@
+from bs4 import BeautifulSoup
+import requests
+import math
+import sqlite3
+import random
+import time
+import datetime
+
+
+currentDateTime = datetime.datetime.now()
+con = sqlite3.connect('property_krakow.db',
+                             detect_types=sqlite3.PARSE_DECLTYPES |
+                             sqlite3.PARSE_COLNAMES)
+
+cur = con.cursor()
+# cur.execute("CREATE TABLE krakow(id INTEGER PRIMARY KEY, date TIMESTAMP, price, district, rooms, area, sqr_price, floor)")
+# cur.execute("CREATE TABLE krakow_rent(id INTEGER PRIMARY KEY, date TIMESTAMP, price, district, rooms, area, floor)")
+# cur.execute("CREATE TABLE warszawa(id INTEGER PRIMARY KEY, date TIMESTAMP, price, district, rooms, area, sqr_price, floor)")
+# cur.execute("CREATE TABLE warszawa_rent(id INTEGER PRIMARY KEY, date TIMESTAMP, price, district, rooms, area, floor)")
+headers = {'User-Agent': '...'}
+
+
+cities = {
+    'krakow_sell': [f"https://www.otodom.pl/pl/wyniki/sprzedaz/mieszkanie/malopolskie/krakow/krakow/"
+                    f"krakow?viewType=listing&page=", 'krakow', 'Kraków'],
+    'krakow_rent': [f"https://www.otodom.pl/pl/wyniki/wynajem/mieszkanie/malopolskie/krakow/krakow/"
+                    f"krakow?ownerTypeSingleSelect=ALL&distanceRadius=0&viewType=listing&page=", "krakow_rent",
+                    'Kraków'],
+    'warszawa_sell': [f'https://www.otodom.pl/pl/wyniki/sprzedaz/mieszkanie/mazowieckie/warszawa/warszawa/'
+                      f'warszawa?viewType=listing&page=', "warszawa", 'Warszawa'],
+    'warszawa_rent': [f'https://www.otodom.pl/pl/wyniki/wynajem/mieszkanie/mazowieckie/warszawa/warszawa/'
+                      f'warszawa?ownerTypeSingleSelect=ALL&distanceRadius=0&viewType=listing&page=', 'warszawa_rent',
+                      'Warszawa']
+}
+
+
+number_in_string = [str(x) for x in range(10)]
+print(number_in_string)
+
+
+def rent(city):
+    global number_in_string
+    start = True
+    page = 1
+    last_page = float('inf')
+    # statement = '''SELECT max(id)  FROM krakow'''
+    # cur.execute(statement)
+    id_add = 1
+    url = city[0]
+    table = city[1]
+    localization = city[2]
+    while start:
+
+        print(page)
+        url_link = url + str(page)
+        result = requests.get(url_link, headers=headers).text
+        doc = BeautifulSoup(result, "html.parser")
+
+        if last_page == float('inf'):
+            last_page = int(doc.find(class_='css-1vdlgt7').text.split('.')[-1])
+
+        res = doc.find_all(class_="css-1ojmxpg")
+
+        for i in res:
+            price, rooms, area, floor = 0, 0, 0, -1
+            district = 'N/A'
+            if i.find(class_='css-1uwck7i').text != "Zapytaj o cenę":
+                print(i.find(class_='css-1uwck7i').text, 'A moje to', i.find(class_='css-1uwck7i').text[0:4])
+                try:
+                    price = ''
+                    for j in i.find(class_='css-1uwck7i').text:
+                        if j in number_in_string:
+                            price += j
+                        elif j == ' ':
+                            pass
+                        else:
+                            break
+                    price = int(price)
+                    print(price)
+                    city = i.find(class_='css-1dvtw4c').text.split()[-2:-1][0][0:-1]
+                    if city == localization:
+                        district = i.find(class_='css-1dvtw4c').text.split()[-3:-2][0][0:-1]
+                    print(i.find(class_='css-uki0wd').text.split())
+                    for text in i.find(class_='css-uki0wd').text.split():
+                        if 'pokoi' in text:
+                            rooms = int(text[-1])
+                        if 'pokojePowierzchnia' in text or 'pokójPowierzchnia' in text or 'pokoiPowierzchnia' in text:
+                            area = int(math.floor(float(text.split('a')[-1])))
+                        if 'm²Piętro'.lower() in text.lower():
+                            floor = text.split('o')[-1]
+                            print(floor)
+                            if floor == 'parter':
+                                floor = 0
+                            else:
+                                floor = int(text.split('o')[-1])
+                except ValueError:
+                    price, rooms, area, floor = 0, 0, 0, -1
+            if rooms == 1 and area > 100:
+                price, rooms, area, floor = 0, 0, 0, -1
+            if price != 0 and rooms != 0 and area != 0 and floor != -1:
+                insertQuery = f"""INSERT INTO {table} VALUES (?, ?, ?, ?, ?, ?, ?);"""
+                cur.execute(insertQuery, (id_add, currentDateTime, price, district, rooms, area, floor))
+
+            id_add += 1
+        con.commit()
+        page += 1
+        time.sleep(random.random() * 5)
+        if page == last_page + 1:
+            start = False
+
+
+def sell(city):
+    start = True
+    page = 1
+    last_page = float('inf')
+    # statement = '''SELECT max(id)  FROM krakow'''
+    # cur.execute(statement)
+    id_add = 1
+    url = city[0]
+    table = city[1]
+    localization = city[2]
+    while start:
+        print(page)
+        url_link = url + str(page)
+        result = requests.get(url_link, headers=headers).text
+        doc = BeautifulSoup(result, "html.parser")
+
+        if last_page == float('inf'):
+            last_page = int(doc.find(class_='css-1vdlgt7').text.split('.')[-1])
+
+        res = doc.find_all(class_="css-1ojmxpg")
+
+        for i in res:
+            price, rooms, area, sqr_price, floor, a = 0, 0, 0, 0, 0, -1
+            district = 'N/A'
+            if i.find(class_='css-1uwck7i').text != "Zapytaj o cenę":
+                try:
+                    price = int(''.join(i.find(class_='css-1uwck7i').text.split()[0:-1]))
+                    city = i.find(class_='css-1dvtw4c').text.split()[-2:-1][0][0:-1]
+                    if city == localization:
+                        district = i.find(class_='css-1dvtw4c').text.split()[-3:-2][0][0:-1]
+                    print(i.find(class_='css-uki0wd').text.split())
+                    for text in i.find(class_='css-uki0wd').text.split():
+                        if 'pokoi' in text:
+                            rooms = int(text[-1])
+                        if 'pokojePowierzchnia' in text or 'pokójPowierzchnia' in text or 'pokoiPowierzchnia' in text:
+                            area = int(math.floor(float(text.split('a')[-1])))
+                        if 'kwadratowy' in text:
+                            sqr_price = int(text.split('y')[-1])
+                            if sqr_price < 100:
+                                sqr_price *= 1000
+                        if 'zł/m²Piętro'.lower() in text.lower():
+                            floor = text.split('o')[-1]
+                            print(floor)
+                            if floor == 'parter':
+                                floor = 0
+                                print("first condition")
+                            else:
+                                floor = int(text.split('o')[-1])
+                except ValueError:
+                    price, rooms, area, sqr_price, floor, a = 0, 0, 0, 0, 0, -1
+            if rooms == 1 and area > 100:
+                price, rooms, area, sqr_price, floor, a = 0, 0, 0, 0, 0, -1
+            if price != 0 and rooms != 0 and area != 0 and sqr_price != 0 and floor != -1:
+                insertQuery = f"""INSERT INTO {table} VALUES (?, ?, ?, ?, ?, ?, ?, ?);"""
+                cur.execute(insertQuery, (id_add, currentDateTime, price, district, rooms, area, sqr_price, floor))
+
+            id_add += 1
+        con.commit()
+        page += 1
+        time.sleep(random.random() * 5)
+        if page == last_page + 1:
+            start = False
+
+
+rent(cities['warszawa_rent'])

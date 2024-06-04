@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="all-page">
+<div class="container">
+  <header>
+      <div class="row">
+          <div class="col-9">
+      {% if request.path  == '/warszawa' %}
+<a href="{{url_for('index')}}" class="btn btn-lg btn-outline-success border-top-0 rounded-1 top-button-city mb-4 btn-top-height-gg">Kraków</a>
+       <a href="{{url_for('warszawa')}}" class="btn btn-lg btn-success border-top-0 rounded-1 top-button-city mb-4 btn-top-height-gg">Warszawa</a>
+      {% else %}
+      <a href="{{url_for('index')}}" class="btn btn-lg btn-success border-top-0 rounded-1 top-button-city mb-4 btn-top-height-gg">Kraków</a>
+       <a href="{{url_for('warszawa')}}" class="btn btn-lg btn-outline-success border-top-0 rounded-1 top-button-city mb-4 btn-top-height-gg">Warszawa</a>
+      {% endif %}
+              </div>
+      <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+    <dotlottie-player src="https://lottie.host/7ffeb1fa-b8e9-40ba-b346-d86d24b755bc/sy9z4PL7U4.json" background="transparent" speed="1" style="width: 300px; height: 100px; float:right;" loop autoplay></dotlottie-player>
+  </div>
+  </header>
+</div>
+  <div class="container">
+    <div class="card" >
+  <div class="card-body">
+    <form  method="post">
+      {{ form.csrf_token }}
+      {{ form.hidden_tag() }}
+      <div class="row">
+        <div class="col-1-25 ml-1">
+      {{ form.min_rooms(class="form-control") }}
+        </div>
+          <div class="col-1-25">
+      {{ form.max_rooms(class="form-control") }}
+          </div>
+<div class="col-1-1">
+      {{ form.min_area(class="form-control") }}
+</div>
+    <div class="col-1-1">
+      {{ form.max_area(class="form-control") }}
+      </div>
+    <div class="col-1-25">
+      {{ form.min_floor(class="form-control") }}
+      </div>
+    <div class="col-1-25">
+      {{ form.max_floor(class="form-control") }}
+      </div>
+        <div class="col-1-5">
+      {{ form.rent_sell(class="form-control1") }}
+          </div>
+        <div class="col-1-25">
+      {{ form.submit(class="btn btn-success btn-md ml-5") }}
+        </div>
+        <div class="col-1-25">
+        <a href="{{url_for('index')}}" class="btn btn-outline-primary ml-5" id="reset-page-form">Reset</a>
+        </div></div>
+        </form>
+
+  </div>
+</div>
+
+
+
+    {% if data[2][0]|length == 3 %}
+    {% include 'container_bar_pie_sell.html'  %}
+    {% include 'table.html'  %}
+      {% else %}
+    {% include 'container_bar_pie_rent.html'  %}
+      {% include 'table_rent.html' %}
+      {% endif %}
+    </div>
+    <div class="container mt-5 pb-5 text-primary">
+    <h4>@2024</h4>
+
+    </div>
+    </div>
+
+
+
+{% endblock %}
+
