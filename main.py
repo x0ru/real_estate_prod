@@ -1,9 +1,9 @@
-from flask import Flask, render_template, redirect, url_for, flash, request
-import sqlite3
+from flask import Flask, render_template
 from flask_wtf import FlaskForm, CSRFProtect
-from wtforms import StringField, SubmitField, SelectField, RadioField
-from wtforms.validators import DataRequired, Length, AnyOf, ValidationError
+from wtforms import SubmitField, SelectField
 import secrets
+import psycopg2
+
 
 app = Flask(__name__)
 foo = secrets.token_urlsafe(16)
@@ -62,8 +62,16 @@ def basic_select2():
 
 def filter_select(city, min_rooms, max_rooms, min_area, max_area, min_floor, max_floor, rent_sell):
 
-    con = sqlite3.connect('property_krakow.db',
-                          detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
+    POSTGRES_DATABASE_HOST_ADDRESS = "ccaml3dimis7eh.cluster-czz5s0kz4scl.eu-west-1.rds.amazonaws.com"
+    POSTGRES_DATABASE_NAME = "d2bib13eka3ngm"
+    POSTGRES_USERNAME = "uf4c8m5ko9g43g"
+    POSTGRES_PASSWORD = "p864da304922dcf7c9b57f57b3e58283892e585f147e8bfe622e89a5ab1ab1d87"
+    POSTGRES_CONNECTION_PORT = "5432"
+
+    db_info = "host='%s' dbname='%s' user='%s' password='%s' sslmode='require'  port='%s'" % (
+    POSTGRES_DATABASE_HOST_ADDRESS, POSTGRES_DATABASE_NAME, POSTGRES_USERNAME, POSTGRES_PASSWORD,
+    POSTGRES_CONNECTION_PORT)
+    con = psycopg2.connect(db_info)
     cur = con.cursor()
 
     statement = f'''SELECT district, avg(sqr_price), avg(price), avg(area), count(*)  FROM {city}
