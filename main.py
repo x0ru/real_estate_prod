@@ -3,6 +3,7 @@ from flask_wtf import FlaskForm, CSRFProtect
 from wtforms import SubmitField, SelectField
 import secrets
 import psycopg2
+import os
 
 
 app = Flask(__name__)
@@ -62,10 +63,10 @@ def basic_select2():
 
 def filter_select(city, min_rooms, max_rooms, min_area, max_area, min_floor, max_floor, rent_sell):
 
-    POSTGRES_DATABASE_HOST_ADDRESS = "ccaml3dimis7eh.cluster-czz5s0kz4scl.eu-west-1.rds.amazonaws.com"
-    POSTGRES_DATABASE_NAME = "d2bib13eka3ngm"
-    POSTGRES_USERNAME = "uf4c8m5ko9g43g"
-    POSTGRES_PASSWORD = "p864da304922dcf7c9b57f57b3e58283892e585f147e8bfe622e89a5ab1ab1d87"
+    POSTGRES_DATABASE_HOST_ADDRESS = os.environ.get('POSTGRES_DATABASE_HOST_ADDRESS')
+    POSTGRES_DATABASE_NAME = os.environ.get('POSTGRES_DATABASE_NAME')
+    POSTGRES_USERNAME = os.environ.get('POSTGRES_USERNAME')
+    POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD')
     POSTGRES_CONNECTION_PORT = "5432"
 
     db_info = "host='%s' dbname='%s' user='%s' password='%s' sslmode='require'  port='%s'" % (
