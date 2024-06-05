@@ -63,12 +63,18 @@
 
 
     {% if data[2][0]|length == 3 %}
+      {% if data[1]|length > 0 %}
     {% include 'container_bar_pie_sell.html'  %}
+      {% endif %}
     {% include 'table.html'  %}
+
       {% else %}
+{% if data[1]|length > 0 %}
     {% include 'container_bar_pie_rent.html'  %}
+      {% endif %}
       {% include 'table_rent.html' %}
       {% endif %}
+
     </div>
     <div class="container mt-5 pb-5 text-primary">
     <h4>@2024</h4>
