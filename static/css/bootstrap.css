@@ -8988,3 +8988,15 @@ a.text-dark:hover, a.text-dark:focus {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
+
+.green {
+color: var(--green)
+}
+
+.red {
+color: var(--red)
+}
+
+.blue {
+color: var(--blue)
+}

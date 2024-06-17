@@ -25,7 +25,12 @@ var chartData = [
                         '{{ i[0] }}'
                         {% endif %},
 
+                        {% if data[2][0]|length == 3 %}
                         y: {{ i[1]|int }} },
+                        {% else %}
+                        y: {{ (i[1]/i[2])|int }} },
+                        {% endif %}
+
                         {% endif %}
                         {% endfor %}
 ];
@@ -47,7 +52,13 @@ var chartData = [
     lineStyle: { width: 0 },
         majorTickLines: { width: 0 },
         minorTickLines: { width: 0 },
-        minimum: 0, maximum: {{ data[1][0][1] }},
+        minimum: 0,
+        {% if data[2][0]|length == 3 %}
+        maximum: {{ data[1][0][1] }},
+        {% else %}
+        maximum: {{ data[1][0][1]/data[1][0][2] }},
+        {% endif %}
+
         interval: 5000,
         labelFormat: '{value} zł',
         majorGridLines: { width: 0 },

@@ -1,17 +1,30 @@
-       <table class="table table-hover table-sm mt-5 text-primary">
+
+<!-- Difference for rent and sell. Setting up the var -->
+      {% if data[2][0]|length != 3 %}
+      {% set x = 1 %}
+      {% else %}
+      {% set x = 0 %}
+      {% endif %}
+
+
+<table class="table table-hover table-sm mt-5 text-primary">
   <thead>
     <tr class="table-success">
       <th scope="col" class="text-center">#</th>
       <th scope="col" class="text-center" >Dzielnica</th>
       <th scope="col" class="text-center">Średnia cena za m2</th>
+      <th scope="col" class="text-center">Zmiana średniej ceny tydzień/tydzień</th>
       <th scope="col" class="text-center">Średnia cena</th>
-        <th scope="col" class="text-center">Średnia powierzchnia</th>
-        <th scope="col" class="text-center">Liczba ogłoszeń</th>
+      <th scope="col" class="text-center">Średnia powierzchnia</th>
+      <th scope="col" class="text-center">Liczba ogłoszeń</th>
+      <th scope="col" class="text-center">Liczba ogłoszeń tydzien/tydzien</th>
     </tr>
   </thead>
+
   <tbody>
-{% for i in data[1] %}
-{% if i[0] != "N/A" %}
+    <!-- Checking names in database and fixing it for krakow -->
+    {% for i in data[1] %}
+    {% if i[0] != "N/A" %}
     <tr class="table-success">
       <th scope="row" class="text-center">{{ loop.index }}</th>
         {% if i[0] == "Krzesławickie" %}
@@ -30,12 +43,42 @@
       <td class="text-center">{{ i[0] }}</td>
         {% endif %}
 
-      <td class="text-center">{{ "{:,}".format(i[1]|int) }} zł</td>
-      <td class="text-center">{{ "{:,}".format(i[2]|int) }} zł</td>
-        <td class="text-center">{{ i[3]|int }} m2</td>
-        <td class="text-center">{{ i[4] }}</td>
+      <!--Average price -->
+      <!--Calculation for rent has to be done with dividing two columns -->
+      {% if data[2][0]|length == 3 %}
+        <td class="text-center">{{ "{:,}".format(i[1]|int) }} zł</td>
+      {% elif (i[1] != None) and (i[2] != None)%}
+        <td class="text-center">{{ "{:,}".format((i[1]/i[2])|int) }} zł</td>
+      {% endif %}
+
+      <!-- Returning var and fetching data for change in price w/w -->
+      {% if i[5 - x] > 0 %}
+        <td class="text-center green">{{ i[5 - x] }} %</td>
+      {% else %}
+      <td class="text-center red">{{ i[5 - x] }} %</td>
+      {% endif %}
+
+      <!-- Return avg price -->
+      <td class="text-center">{{ "{:,}".format(i[2 - x]|int) }} zł</td>
+
+      <!-- Return area -->
+      <td class="text-center">{{ i[3 - x]|int }} m2</td>
+
+      <!-- Return adds number -->
+      <td class="text-center">{{ i[4 - x] }}</td>
+
+      <!-- Return adds change w/w -->
+      {% if i[6 - x] > 0 %}
+        <td class="text-center green">+{{ i[6 - x] }}</td>
+      {% elif  i[6 - x] == 0 %}
+      <td class="text-center blue">-</td>
+      {% else %}
+      <td class="text-center red">{{ i[6 - x] }}</td>
+      {% endif %}
     </tr>
-{% endif %}
-  {% endfor %}
+
+    {% endif %}
+    {% endfor %}
+
     </tbody>
 </table>

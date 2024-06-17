@@ -84,7 +84,6 @@ database="real_estate", user='postgres', password='', host="localhost", port=543
 
 
 def filter_select(city, min_rooms, max_rooms, min_area, max_area, min_floor, max_floor, rent_sell):
-
     POSTGRES_DATABASE_HOST_ADDRESS = os.environ.get('POSTGRES_DATABASE_HOST_ADDRESS')
     POSTGRES_DATABASE_NAME = os.environ.get('POSTGRES_DATABASE_NAME')
     POSTGRES_USERNAME = os.environ.get('POSTGRES_USERNAME')
@@ -97,6 +96,9 @@ def filter_select(city, min_rooms, max_rooms, min_area, max_area, min_floor, max
     con = psycopg2.connect(db_info)
     cur = con.cursor()
 
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    #LEGACY QUERY#
+    
     statement = f'''SELECT district, avg(sqr_price), avg(price), avg(area), count(*)  FROM {city}
                         where rooms >= {min_rooms} and rooms <= {max_rooms} and 
                               area >= {min_area} and area <= {max_area} and
@@ -104,6 +106,42 @@ def filter_select(city, min_rooms, max_rooms, min_area, max_area, min_floor, max
                               date = (select max(date) from {city})
                             group by district
                             order by avg(sqr_price) desc'''
+                            
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+    statement = f'''SELECT 
+                                district,
+                                
+                                AVG(CASE date WHEN (select max(date) from {city}) then sqr_price end),
+                                
+                                AVG(CASE date WHEN (select max(date) from {city}) then price end),
+                                
+                                AVG(CASE date WHEN (select max(date) from {city}) then area end),
+                                
+                                COUNT(CASE date WHEN (select max(date) from {city}) then price end),
+                                
+                                cast(ROUND(
+                                (avg(CASE date WHEN (select max(date) from {city}) then price end) -
+                                avg(CASE date WHEN (select max(date) from {city} where date < 
+                                (select max(date) from {city})) then price end)) /
+                                avg(CASE date WHEN (select max(date) from {city} where date < 
+                                (select max(date) from {city})) then price end)
+                                * 100 ,1) as float),
+                                
+                                COUNT(CASE date WHEN (select max(date) from {city}) then price end) -
+                                COUNT(CASE date WHEN (select max(date) from {city} where date < 
+                                (select max(date) from {city})) then price end)
+                                
+                                FROM {city}
+                                
+                                where rooms >= {min_rooms} and rooms <= {max_rooms} and 
+                                area >= {min_area} and area <= {max_area} and
+                                floor >= {min_floor} and floor <= {max_floor} 
+                                
+                                group by district
+                                
+                                order by avg(sqr_price) desc
+                                '''
 
     statement2 = f'''SELECT avg(sqr_price), avg(price), count(*)  FROM {city}
                             where rooms >= {min_rooms} and rooms <= {max_rooms} and 
@@ -112,13 +150,38 @@ def filter_select(city, min_rooms, max_rooms, min_area, max_area, min_floor, max
                                     date = (select max(date) from {city})'''
 
     if int(rent_sell) == 1:
-        statement = f'''SELECT district, avg(price), avg(area), count(*)  FROM {city}_rent
-                                where rooms >= {min_rooms} and rooms <= {max_rooms} and 
-                                      area >= {min_area} and area <= {max_area} and
-                                      floor >= {min_floor} and floor <= {max_floor} and 
-                                      date = (select max(date) from {city}_rent)
-                                    group by district
-                                    order by avg(price) desc'''
+        statement = f'''SELECT 
+                                        district,
+                                        
+                                        AVG(CASE date WHEN (select max(date) from {city}_rent) then price end),
+                                        
+                                        AVG(CASE date WHEN (select max(date) from {city}_rent) then area end),
+                                        
+                                        COUNT(CASE date WHEN (select max(date) from {city}_rent) then price end),
+
+                                        cast(ROUND(
+                                        (avg(CASE date WHEN (select max(date) from {city}_rent) then price/area end) -
+                                        avg(CASE date WHEN (select max(date) from {city}_rent where date < 
+                                        (select max(date) from {city}_rent)) then price/area end)) /
+                                        avg(CASE date WHEN (select max(date) from {city}_rent where date < 
+                                        (select max(date) from {city}_rent)) then price/area end)
+                                        * 100 ,1) as float),
+                                        
+                                        COUNT(CASE date WHEN (select max(date) from {city}_rent) then price end) -
+                                        COUNT(CASE date WHEN (select max(date) from {city}_rent where date < 
+                                        (select max(date) from {city}_rent)) then price end)
+                                        
+                                        FROM {city}_rent
+                                        
+                                        where rooms >= {min_rooms} and rooms <= {max_rooms} and 
+                                        area >= {min_area} and area <= {max_area} and
+                                        floor >= {min_floor} and floor <= {max_floor} 
+                                        
+                                        group by district
+                                        
+                                        order by 
+                                        AVG(CASE date WHEN (select max(date) from {city}_rent) then price/area end) desc
+                                        '''
 
         statement2 = f'''SELECT  avg(price), count(*)  FROM {city}_rent
                                     where rooms >= {min_rooms} and rooms <= {max_rooms} and 
@@ -127,9 +190,24 @@ def filter_select(city, min_rooms, max_rooms, min_area, max_area, min_floor, max
                                             date = (select max(date) from {city}_rent)'''
 
     cur.execute(statement)
-    queries = {1: cur.fetchall()}
+    queries = {1: []}
+    iteration = 0
+    avg = 0
+    adds_count = 0
+    for record in cur.fetchall():
+        iteration += 1
+        avg += record[-2]
+        adds_count += record[-1]
+        if any(elem is None for elem in record) is False:
+            # noinspection PyTypeChecker
+            queries[1].append(record)
+        else:
+            print(record)
+        queries[3] = [round(avg/iteration, 1), adds_count]
     cur.execute(statement2)
     queries[2] = cur.fetchall()
+    con.close()
+    print(queries)
     return queries
 
 

@@ -1,10 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<div class="card-group mt-5 text-primary">
+  <div class="card">
+    <div class="card-body text-center">
+      <div class="card-header">
+      <h4>{{ "{:,}".format(data[2][0][0]|int)}} zł </h4>
+          {% if data[2][0]|length == 3 %}
+          <p> Średnia cena za m2</p>
+          {% else %}
+      <p> Średnia cena wynajmu bez czynszu</p>
+          {% endif %}
+      </div>
+    </div>
+  </div>
+
+    <div class="card">
+    <div class="card-body text-center">
+      <div class="card-header">
+
+          {% if data[3][0] >= 0 %}
+          <h4 class="green">{{ data[3][0] }}%</h4>
+          {% else %}
+          <h4 class="red">{{ data[3][0] }}%</h4>
+          {% endif %}
+
+        <p>Zmiana średniej ceny tydzień/tydzień</p>
+      </div>
+    </div>
+          </div>
+          <div class="card">
+    <div class="card-body text-center">
+      <div class="card-header">
+          {% if data[2][0]|length == 3 %}
+      <h4>{{ data[2][0][2] }}</h4>
+     {% else %}
+        <h4>{{ data[2][0][1] }}</h4>
+     {% endif %}
+        <p>Ilość ogłoszeń</p>
+      </div>
+    </div>
+          </div>
+
+
+    <div class="card">
+    <div class="card-body text-center">
+      <div class="card-header">
+
+          {% if data[3][1] >= 0 %}
+          <h4 class="green">+{{ data[3][1] }}</h4>
+          {% elif data[3][1] == 0 %}
+          <td class="text-center blue">-</td>
+          {% else %}
+          <h4 class="red">{{ data[3][1] }}</h4>
+          {% endif %}
+
+        <p>Ilość ogłoszeń tydzień/tydzień</p>
+      </div>
+    </div>
+          </div>
+    </div>

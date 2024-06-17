@@ -1,17 +1,24 @@
 from bs4 import BeautifulSoup
 import requests
 import math
-import sqlite3
+import psycopg2
 import random
 import time
 import datetime
+import os
 
 
 currentDateTime = datetime.datetime.now()
-con = sqlite3.connect('property_krakow.db',
-                             detect_types=sqlite3.PARSE_DECLTYPES |
-                             sqlite3.PARSE_COLNAMES)
+POSTGRES_DATABASE_HOST_ADDRESS = 'ccaml3dimis7eh.cluster-czz5s0kz4scl.eu-west-1.rds.amazonaws.com'
+POSTGRES_DATABASE_NAME = 'd2bib13eka3ngm'
+POSTGRES_USERNAME = 'uf4c8m5ko9g43g'
+POSTGRES_PASSWORD = 'p864da304922dcf7c9b57f57b3e58283892e585f147e8bfe622e89a5ab1ab1d87'
+POSTGRES_CONNECTION_PORT = "5432"
 
+db_info = "host='%s' dbname='%s' user='%s' password='%s' sslmode='require'  port='%s'" % (
+    POSTGRES_DATABASE_HOST_ADDRESS, POSTGRES_DATABASE_NAME, POSTGRES_USERNAME, POSTGRES_PASSWORD,
+    POSTGRES_CONNECTION_PORT)
+con = psycopg2.connect(db_info)
 cur = con.cursor()
 # cur.execute("CREATE TABLE krakow(id INTEGER PRIMARY KEY, date TIMESTAMP, price, district, rooms, area, sqr_price, floor)")
 # cur.execute("CREATE TABLE krakow_rent(id INTEGER PRIMARY KEY, date TIMESTAMP, price, district, rooms, area, floor)")
@@ -43,9 +50,10 @@ def rent(city):
     start = True
     page = 1
     last_page = float('inf')
-    # statement = '''SELECT max(id)  FROM krakow'''
-    # cur.execute(statement)
-    id_add = 1
+    statement = f'''SELECT max(id)  FROM {city[1]}'''
+    cur.execute(statement)
+    id_add = int(cur.fetchone()[0]) + 1
+    print(id_add)
     url = city[0]
     table = city[1]
     localization = city[2]
@@ -57,7 +65,8 @@ def rent(city):
         doc = BeautifulSoup(result, "html.parser")
 
         if last_page == float('inf'):
-            last_page = int(doc.find(class_='css-1vdlgt7').text.split('.')[-1])
+            last_page = int(doc.find_all(class_='css-1tospdx')[-1].text)
+            print(last_page)
 
         res = doc.find_all(class_="css-1ojmxpg")
 
@@ -98,13 +107,13 @@ def rent(city):
             if rooms == 1 and area > 100:
                 price, rooms, area, floor = 0, 0, 0, -1
             if price != 0 and rooms != 0 and area != 0 and floor != -1:
-                insertQuery = f"""INSERT INTO {table} VALUES (?, ?, ?, ?, ?, ?, ?);"""
+                insertQuery = f"""INSERT INTO {table} VALUES (%s, %s, %s, %s, %s, %s, %s)"""
                 cur.execute(insertQuery, (id_add, currentDateTime, price, district, rooms, area, floor))
 
             id_add += 1
         con.commit()
         page += 1
-        time.sleep(random.random() * 5)
+        time.sleep(random.random() * 10)
         if page == last_page + 1:
             start = False
 
@@ -113,20 +122,22 @@ def sell(city):
     start = True
     page = 1
     last_page = float('inf')
-    # statement = '''SELECT max(id)  FROM krakow'''
-    # cur.execute(statement)
-    id_add = 1
+    statement = f'''SELECT max(id)  FROM {city[1]}'''
+    cur.execute(statement)
+    id_add = int(cur.fetchone()[0]) + 1
+
     url = city[0]
     table = city[1]
     localization = city[2]
     while start:
-        print(page)
+        print(page, "page number", last_page, 'last_page')
         url_link = url + str(page)
         result = requests.get(url_link, headers=headers).text
         doc = BeautifulSoup(result, "html.parser")
 
         if last_page == float('inf'):
-            last_page = int(doc.find(class_='css-1vdlgt7').text.split('.')[-1])
+            last_page = int(doc.find_all(class_='css-1tospdx')[-1].text)
+            print(last_page)
 
         res = doc.find_all(class_="css-1ojmxpg")
 
@@ -162,7 +173,7 @@ def sell(city):
             if rooms == 1 and area > 100:
                 price, rooms, area, sqr_price, floor, a = 0, 0, 0, 0, 0, -1
             if price != 0 and rooms != 0 and area != 0 and sqr_price != 0 and floor != -1:
-                insertQuery = f"""INSERT INTO {table} VALUES (?, ?, ?, ?, ?, ?, ?, ?);"""
+                insertQuery = f"""INSERT INTO {table} VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"""
                 cur.execute(insertQuery, (id_add, currentDateTime, price, district, rooms, area, sqr_price, floor))
 
             id_add += 1
