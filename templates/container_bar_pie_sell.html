@@ -1,8 +1,5 @@
 <div class="card-group mt-5 text-primary">
 
-<!-- Checking if any records are fetched otherwise return no record page -->
-{% if data[1]|length > 0 %}
-
   <!-- Card with average prices -->
   <div class="card">
     <div class="card-body text-center">
@@ -27,11 +24,5 @@
     </div>
   </div>
 
-{% else %}
-
-  <!-- Return no record page if no records are fetched -->
-  {% include 'no_records.html'  %}
-
-{% endif %}
   <!-- end of card group -->
 </div>

@@ -68,7 +68,7 @@ def rent(city):
             last_page = int(doc.find_all(class_='css-1tospdx')[-1].text)
             print(last_page)
 
-        res = doc.find_all(class_="css-1ojmxpg")
+        res = doc.find_all(class_="css-13gthep")
 
         for i in res:
             price, rooms, area, floor = 0, 0, 0, -1
@@ -139,12 +139,13 @@ def sell(city):
             last_page = int(doc.find_all(class_='css-1tospdx')[-1].text)
             print(last_page)
 
-        res = doc.find_all(class_="css-1ojmxpg")
+        res = doc.find_all(class_="css-13gthep")
 
         for i in res:
             price, rooms, area, sqr_price, floor, a = 0, 0, 0, 0, 0, -1
             district = 'N/A'
             if i.find(class_='css-1uwck7i').text != "Zapytaj o cenę":
+                print(i.find(class_='css-1uwck7i').text)
                 try:
                     price = int(''.join(i.find(class_='css-1uwck7i').text.split()[0:-1]))
                     city = i.find(class_='css-1dvtw4c').text.split()[-2:-1][0][0:-1]
@@ -184,4 +185,4 @@ def sell(city):
             start = False
 
 
-rent(cities['warszawa_rent'])
+sell(cities['krakow_rent'])
