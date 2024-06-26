@@ -241,8 +241,21 @@ def index():
         return render_template('index.html', data=filter_select('krakow', form.min_rooms.data, form.max_rooms.data,
                                                                 form.min_area.data, form.max_area.data,
                                                                 form.min_floor.data, form.max_floor.data,
-                                                                form.rent_sell.data), form=form)
-    return render_template('index.html', data=filter_select('krakow', 0, 100, 0, 10000, 0, 100, 0), form=form)
+                                                                form.rent_sell.data), form=form, house=False)
+    return render_template('index.html', data=filter_select('krakow', 0, 100, 0, 10000, 0, 100, 0), form=form,
+                           house=False)
+
+@app.route('/krakow-house', methods=['GET', 'POST'])
+def krakow_house():
+    form = FilterForm()
+    validation_if_min_greater_than_max(form)
+    if form.validate_on_submit():
+        return render_template('index.html', data=filter_select('krakow_house', form.min_rooms.data, form.max_rooms.data,
+                                                                form.min_area.data, form.max_area.data,
+                                                                form.min_floor.data, form.max_floor.data,
+                                                                form.rent_sell.data), form=form, house=True)
+    return render_template('index.html', data=filter_select('krakow_house', 0, 100, 0, 10000, 0, 100, 0), form=form,
+                           house=True)
 
 
 @app.route('/warszawa', methods=['GET', 'POST'])
@@ -253,8 +266,9 @@ def warszawa():
         return render_template('index.html', data=filter_select('warszawa', form.min_rooms.data, form.max_rooms.data,
                                                                 form.min_area.data, form.max_area.data,
                                                                 form.min_floor.data, form.max_floor.data,
-                                                                form.rent_sell.data), form=form,)
-    return render_template('index.html', data=filter_select('warszawa', 0, 100, 0, 10000, 0, 100, 0), form=form)
+                                                                form.rent_sell.data), form=form,house=False)
+    return render_template('index.html', data=filter_select('warszawa', 0, 100, 0, 10000, 0, 100, 0), form=form,
+                           house=False)
 
 
 if __name__ == "__main__":

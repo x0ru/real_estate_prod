@@ -24,6 +24,11 @@ cur = con.cursor()
 # cur.execute("CREATE TABLE krakow_rent(id INTEGER PRIMARY KEY, date TIMESTAMP, price, district, rooms, area, floor)")
 # cur.execute("CREATE TABLE warszawa(id INTEGER PRIMARY KEY, date TIMESTAMP, price, district, rooms, area, sqr_price, floor)")
 # cur.execute("CREATE TABLE warszawa_rent(id INTEGER PRIMARY KEY, date TIMESTAMP, price, district, rooms, area, floor)")
+#cur.execute("CREATE TABLE krakow_house(id INTEGER PRIMARY KEY, date TIMESTAMP, price INT, district VARCHAR(255), rooms INT"
+#           ", area INT, sqr_price INT, floor INT);")
+#con.commit()
+#cur.close()
+
 headers = {'User-Agent': '...'}
 
 
@@ -33,6 +38,8 @@ cities = {
     'krakow_rent': [f"https://www.otodom.pl/pl/wyniki/wynajem/mieszkanie/malopolskie/krakow/krakow/"
                     f"krakow?ownerTypeSingleSelect=ALL&distanceRadius=0&viewType=listing&page=", "krakow_rent",
                     'Kraków'],
+    'krakow_house': ["https://www.otodom.pl/pl/wyniki/sprzedaz/dom/malopolskie/krakow/krakow/krakow?"
+                     "ownerTypeSingleSelect=ALL&distanceRadius=5&viewType=listing&page=", "krakow_house"],
     'warszawa_sell': [f'https://www.otodom.pl/pl/wyniki/sprzedaz/mieszkanie/mazowieckie/warszawa/warszawa/'
                       f'warszawa?viewType=listing&page=', "warszawa", 'Warszawa'],
     'warszawa_rent': [f'https://www.otodom.pl/pl/wyniki/wynajem/mieszkanie/mazowieckie/warszawa/warszawa/'
@@ -42,8 +49,6 @@ cities = {
 
 
 number_in_string = [str(x) for x in range(10)]
-print(number_in_string)
-
 
 def rent(city):
     global number_in_string
@@ -122,13 +127,16 @@ def sell(city):
     start = True
     page = 1
     last_page = float('inf')
-    statement = f'''SELECT max(id)  FROM {city[1]}'''
-    cur.execute(statement)
-    id_add = int(cur.fetchone()[0]) + 1
+
+    try:
+        statement = f'''SELECT max(id)  FROM {city[1]}'''
+        cur.execute(statement)
+        id_add = int(cur.fetchone()[0]) + 1
+    except:
+        id_add = 1
 
     url = city[0]
     table = city[1]
-    localization = city[2]
     while start:
         print(page, "page number", last_page, 'last_page')
         url_link = url + str(page)
@@ -148,9 +156,7 @@ def sell(city):
                 print(i.find(class_='css-1uwck7i').text)
                 try:
                     price = int(''.join(i.find(class_='css-1uwck7i').text.split()[0:-1]))
-                    city = i.find(class_='css-1dvtw4c').text.split()[-2:-1][0][0:-1]
-                    if city == localization:
-                        district = i.find(class_='css-1dvtw4c').text.split()[-3:-2][0][0:-1]
+                    district = i.find(class_='css-1dvtw4c').text.split()[-3:-2][0][0:-1]
                     print(i.find(class_='css-uki0wd').text.split())
                     for text in i.find(class_='css-uki0wd').text.split():
                         if 'pokoi' in text:
@@ -174,6 +180,7 @@ def sell(city):
             if rooms == 1 and area > 100:
                 price, rooms, area, sqr_price, floor, a = 0, 0, 0, 0, 0, -1
             if price != 0 and rooms != 0 and area != 0 and sqr_price != 0 and floor != -1:
+                print(id_add, price, district, rooms, area, sqr_price, floor)
                 insertQuery = f"""INSERT INTO {table} VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"""
                 cur.execute(insertQuery, (id_add, currentDateTime, price, district, rooms, area, sqr_price, floor))
 
@@ -185,4 +192,4 @@ def sell(city):
             start = False
 
 
-sell(cities['krakow_rent'])
+sell(cities['krakow_house'])

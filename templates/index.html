@@ -41,10 +41,10 @@
       {{ form.max_area(class="form-control") }}
       </div>
     <div class="col-1-25">
-      {{ form.min_floor(class="form-control") }}
+      {{ form.min_floor(class="form-control", disabled=house) }}
       </div>
     <div class="col-1-25">
-      {{ form.max_floor(class="form-control") }}
+      {{ form.max_floor(class="form-control", disabled=house) }}
       </div>
         <div class="col-1-5">
       {{ form.rent_sell(class="form-control1") }}
