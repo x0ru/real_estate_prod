@@ -192,4 +192,16 @@ def sell(city):
             start = False
 
 
-sell(cities['krakow_house'])
+def deleting_duplicates(city, rents):
+    delete_statement = f"delete from {city} WHERE id IN " \
+                           f" (SELECT id FROM "\
+                                " (SELECT id, ROW_NUMBER() OVER" \
+                                f"( PARTITION BY district, area, rooms,{rents} date, price" \
+                                " ORDER BY  id ) AS row_num" \
+                                f" FROM {city}) t"\
+                                " WHERE t.row_num > 1 );"
+    cur.execute(delete_statement)
+    con.commit()
+
+
+deleting_duplicates("warszawa_rent", "")
