@@ -33,7 +33,12 @@ class FilterForm(FlaskForm):
                                              (2000, "2000m2"),(2500, "2500m2"), (3000, "3000m2"), (3500, "3500m2"),
                                              (4000, "4000m2"), (4500, "4500m2"), (5000, "5000m2"), (100000, "5000m2+")],
                                 validate_choice=False)
-
+    min_area_house = SelectField('', choices=[(0, "Min m2"), (50, "50m2"), (100, "100m2"), (150, "150m2"), (200, "200m2"),
+                                        (250, "250m2"), (300, "300m2"), (350, "350m2"), (400, "400m2"), (450, "450m2+")],
+                                 validate_choice=False)
+    max_area_house = SelectField('', choices=[(10000, "Max m2"), (50, "50m2"), (100, "100m2"), (150, "150m2"),
+                                              (200, "200m2"), (250, "250m2"), (300, "300m2"), (350, "350m2"),
+                                              (400, "400m2"), (100000, "450m2+")], validate_choice=False)
     min_floor = SelectField('', choices=[(0, "Min piętro"), (1, "1"), (2, "2"), (3, "3"), (4, "4"), (5, "5"), (6, "6"),
                                          (7, "7"), (8, "8"), (9, "9"), (10, "10"), (11, "11"), (12, "12"), (13, "13"),
                                          (14, "14"), (15, "15+")], validate_choice=False)
@@ -295,12 +300,10 @@ def index():
 @app.route('/krakow-house', methods=['GET', 'POST'])
 def krakow_house():
     form = FilterForm()
-    validation_if_min_greater_than_max(form)
-    if form.validate_on_submit():
+    if form.is_submitted():
         return render_template('index.html', data=filter_select('krakow_house', form.min_rooms.data, form.max_rooms.data,
-                                                                form.min_area.data, form.max_area.data,
-                                                                form.min_floor.data, form.max_floor.data,
-                                                                form.rent_sell.data), form=form, house=True, land=False)
+                                                                form.min_area_house.data, form.max_area_house.data,
+                                                                0, 100, 0), form=form, house=True, land=False)
     return render_template('index.html', data=filter_select('krakow_house', 0, 100, 0, 10000, 0, 100, 0), form=form,
                            house=True, land=False)
 

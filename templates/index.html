@@ -35,12 +35,19 @@
           <div class="col-1-25">
       {{ form.max_rooms(class="form-control", disabled=land) }}
           </div>
-          {% if land == True %}
+          {% if (land == True) and (house==True) %}
  <div class="col-1-1">
       {{ form.min_area_land(class="form-control") }}
 </div>
     <div class="col-1-1">
       {{ form.max_area_land(class="form-control") }}
+      </div>
+          {% elif (house == True) and (land == False) %}
+  <div class="col-1-1">
+      {{ form.min_area_house(class="form-control") }}
+</div>
+    <div class="col-1-1">
+      {{ form.max_area_house(class="form-control") }}
       </div>
           {% else %}
 <div class="col-1-1">
