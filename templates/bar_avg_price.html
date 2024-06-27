@@ -89,7 +89,11 @@ var chartData = [
         type: 'Bar',
         marker: {
                     visible: true,
+                    {% if land == False %}
                     shape: 'Diamond',
+                    {% else %}
+                    shape: 'None',
+                    {% endif %}
                     height: 10,
                     width: 10,
                     dataLabel: { visible: true, position: 'Middle', font: {fontWeight: 500, fontFamily: 'Segoe UI', size:'16',color: '#fdfffc'}, },

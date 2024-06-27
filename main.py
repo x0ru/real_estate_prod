@@ -25,6 +25,15 @@ class FilterForm(FlaskForm):
                                         (50, "50m2"), (60, "60m2"), (70, "70m2"), (80, "80m2"), (90, "90m2"),
                                         (100, "100m2"), (110, "110m2"), (120, "120m2"), (130, "130m2"), (140, "140m2"),
                                         (1000, "150m2+")], validate_choice=False)
+    min_area_land = SelectField('', choices=[(0, "Min m2"), (500, "500m2"), (1000, "1000m2"), (1500, "1500m2"),
+                                             (2000, "2000m2"),(2500, "2500m2"), (3000, "3000m2"), (3500, "3500m2"),
+                                             (4000, "4000m2"), (4500, "4500m2"), (5000, "5000m2"), (5000, "5000m2+")],
+                                validate_choice=False)
+    max_area_land = SelectField('', choices=[(100000, "Max m2"), (500, "500m2"), (1000, "1000m2"), (1500, "1500m2"),
+                                             (2000, "2000m2"),(2500, "2500m2"), (3000, "3000m2"), (3500, "3500m2"),
+                                             (4000, "4000m2"), (4500, "4500m2"), (5000, "5000m2"), (100000, "5000m2+")],
+                                validate_choice=False)
+
     min_floor = SelectField('', choices=[(0, "Min piętro"), (1, "1"), (2, "2"), (3, "3"), (4, "4"), (5, "5"), (6, "6"),
                                          (7, "7"), (8, "8"), (9, "9"), (10, "10"), (11, "11"), (12, "12"), (13, "13"),
                                          (14, "14"), (15, "15+")], validate_choice=False)
@@ -191,7 +200,7 @@ def filter_select(city, min_rooms, max_rooms, min_area, max_area, min_floor, max
                                             date = (select max(date) from {city}_rent)'''
 
     if city == "krakow_land":
-        print("we are her")
+        print("we are her", min_area, max_area)
         statement = f'''SELECT 
                                     district,
 
@@ -234,7 +243,6 @@ def filter_select(city, min_rooms, max_rooms, min_area, max_area, min_floor, max
     avg = 0
     adds_count = 0
     for record in cur.fetchall():
-        print(record)
         try:
             iteration += 1
             avg += record[-2]
@@ -250,7 +258,6 @@ def filter_select(city, min_rooms, max_rooms, min_area, max_area, min_floor, max
     cur.execute(statement2)
     queries[2] = cur.fetchall()
     con.close()
-    print(queries)
     return queries
 
 
@@ -268,7 +275,7 @@ def validation_if_min_greater_than_max(form):
         pass
     elif int(form.min_floor.data) > int(form.max_floor.data):
         form.max_floor.data = form.max_floor.choices[0][0]
-
+    print([form.max_rooms.data, form.max_area.data, form.max_floor.data])
     return [form.max_rooms.data, form.max_area.data, form.max_floor.data]
 
 
@@ -301,12 +308,11 @@ def krakow_house():
 @app.route('/krakow-land', methods=['GET', 'POST'])
 def krakow_land():
     form = FilterForm()
-    validation_if_min_greater_than_max(form)
-    if form.validate_on_submit():
-        return render_template('index.html', data=filter_select('krakow_land', form.min_rooms.data, form.max_rooms.data,
-                                                                form.min_area.data, form.max_area.data,
-                                                                form.min_floor.data, form.max_floor.data,
-                                                                form.rent_sell.data), form=form, house=True, land=True)
+    if form.is_submitted():
+        print("yes its validates")
+        return render_template('index.html', data=filter_select('krakow_land', 0, 100, form.min_area_land.data,
+                                                                form.max_area_land.data, 0, 100, 0), form=form,
+                               house=True, land=True)
     return render_template('index.html', data=filter_select('krakow_land', 0, 100, 0, 100000, 0, 100, 0), form=form,
                            house=True, land=True)
 

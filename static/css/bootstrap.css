@@ -2021,7 +2021,7 @@ pre code {
 
 .form-control:disabled, .form-control[readonly] {
   background-color: #000814;
-  color: red;
+  color: #313131;
   opacity: 1;
 }
 

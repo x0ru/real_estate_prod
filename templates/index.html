@@ -35,12 +35,21 @@
           <div class="col-1-25">
       {{ form.max_rooms(class="form-control", disabled=land) }}
           </div>
+          {% if land == True %}
+ <div class="col-1-1">
+      {{ form.min_area_land(class="form-control") }}
+</div>
+    <div class="col-1-1">
+      {{ form.max_area_land(class="form-control") }}
+      </div>
+          {% else %}
 <div class="col-1-1">
       {{ form.min_area(class="form-control") }}
 </div>
     <div class="col-1-1">
       {{ form.max_area(class="form-control") }}
       </div>
+          {% endif %}
     <div class="col-1-25">
       {{ form.min_floor(class="form-control", disabled=house) }}
       </div>
@@ -79,9 +88,10 @@
     </div>
     <div class="container mt-5 pb-5 text-primary">
     <h4>@2024</h4>
+    </div>
+</div>
 
 
 
 
 {% endblock %}
-
