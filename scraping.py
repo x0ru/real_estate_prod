@@ -26,8 +26,10 @@ cur = con.cursor()
 # cur.execute("CREATE TABLE warszawa_rent(id INTEGER PRIMARY KEY, date TIMESTAMP, price, district, rooms, area, floor)")
 #cur.execute("CREATE TABLE krakow_house(id INTEGER PRIMARY KEY, date TIMESTAMP, price INT, district VARCHAR(255), rooms INT"
 #           ", area INT, sqr_price INT, floor INT);")
+#cur.execute("CREATE TABLE krakow_land(id INTEGER PRIMARY KEY, date TIMESTAMP, price INT, district VARCHAR(255),"
+#          " area INT, sqr_price INT);")
 #con.commit()
-#cur.close()
+
 
 headers = {'User-Agent': '...'}
 
@@ -40,6 +42,9 @@ cities = {
                     'Kraków'],
     'krakow_house': ["https://www.otodom.pl/pl/wyniki/sprzedaz/dom/malopolskie/krakow/krakow/krakow?"
                      "ownerTypeSingleSelect=ALL&distanceRadius=5&viewType=listing&page=", "krakow_house"],
+    'krakow_land': ["https://www.otodom.pl/pl/wyniki/sprzedaz/dzialka/malopolskie/krakow/krakow/krakow?distance"
+                    "Radius=5&limit=36&plotType=%5BBUILDING%5D&by=DEFAULT&direction=DESC&viewType=listing&page=",
+                    "krakow_land"],
     'warszawa_sell': [f'https://www.otodom.pl/pl/wyniki/sprzedaz/mieszkanie/mazowieckie/warszawa/warszawa/'
                       f'warszawa?viewType=listing&page=', "warszawa", 'Warszawa'],
     'warszawa_rent': [f'https://www.otodom.pl/pl/wyniki/wynajem/mieszkanie/mazowieckie/warszawa/warszawa/'
@@ -153,12 +158,12 @@ def sell(city):
             price, rooms, area, sqr_price, floor, a = 0, 0, 0, 0, 0, -1
             district = 'N/A'
             if i.find(class_='css-1uwck7i').text != "Zapytaj o cenę":
-                print(i.find(class_='css-1uwck7i').text)
                 try:
                     price = int(''.join(i.find(class_='css-1uwck7i').text.split()[0:-1]))
                     district = i.find(class_='css-1dvtw4c').text.split()[-3:-2][0][0:-1]
                     print(i.find(class_='css-uki0wd').text.split())
                     for text in i.find(class_='css-uki0wd').text.split():
+                        print(text)
                         if 'pokoi' in text:
                             rooms = int(text[-1])
                         if 'pokojePowierzchnia' in text or 'pokójPowierzchnia' in text or 'pokoiPowierzchnia' in text:
@@ -191,12 +196,64 @@ def sell(city):
         if page == last_page + 1:
             start = False
 
+def land_sell(city):
+    start = True
+    page = 1
+    last_page = float('inf')
 
-def deleting_duplicates(city, rents):
+    try:
+        statement = f'''SELECT max(id)  FROM {city[1]}'''
+        cur.execute(statement)
+        id_add = int(cur.fetchone()[0]) + 1
+    except:
+        id_add = 1
+
+    url = city[0]
+    table = city[1]
+    while start:
+        print(page, "page number", last_page, 'last_page')
+        url_link = url + str(page)
+        result = requests.get(url_link, headers=headers).text
+        doc = BeautifulSoup(result, "html.parser")
+
+        if last_page == float('inf'):
+            last_page = int(doc.find_all(class_='css-1tospdx')[-1].text)
+            print(last_page)
+
+        res = doc.find_all(class_="css-13gthep")
+
+        for i in res:
+            price, area, sqr_price= 0, 0, 0
+            district = 'N/A'
+            if i.find(class_='css-1uwck7i').text != "Zapytaj o cenę":
+                try:
+                    price = int(''.join(i.find(class_='css-1uwck7i').text.split()[0:-1]))
+                    district = i.find(class_='css-1dvtw4c').text.split()[-3:-2][0][0:-1]
+                    print(price, district)
+                    for text in i.find(class_='css-uki0wd').text.split():
+                        if 'Powierzchnia' in text:
+                            area = int(math.floor(float(text.split('a')[-1])))
+                        if 'kwadratowy' in text:
+                            sqr_price = int(text.split('y')[-1])
+                except ValueError:
+                    price, area, sqr_price = 0, 0, 0
+            if price != 0 and area != 0 and sqr_price != 0:
+                print(id_add, price, district, area, sqr_price)
+                insertQuery = f"""INSERT INTO {table} VALUES (%s, %s, %s, %s, %s, %s)"""
+                cur.execute(insertQuery, (id_add, currentDateTime, price, district, area, sqr_price))
+
+            id_add += 1
+        con.commit()
+        page += 1
+        time.sleep(random.random() * 5)
+        if page == last_page + 1:
+            start = False
+
+def deleting_duplicates(city, rents, rooms):
     delete_statement = f"delete from {city} WHERE id IN " \
                            f" (SELECT id FROM "\
                                 " (SELECT id, ROW_NUMBER() OVER" \
-                                f"( PARTITION BY district, area, rooms,{rents} date, price" \
+                                f"( PARTITION BY district, area, {rooms} {rents} date, price" \
                                 " ORDER BY  id ) AS row_num" \
                                 f" FROM {city}) t"\
                                 " WHERE t.row_num > 1 );"
@@ -204,4 +261,5 @@ def deleting_duplicates(city, rents):
     con.commit()
 
 
-deleting_duplicates("warszawa_rent", "")
+#land_sell(cities["krakow_land"])
+deleting_duplicates(cities['krakow_land'][1], "", "")

@@ -190,12 +190,51 @@ def filter_select(city, min_rooms, max_rooms, min_area, max_area, min_floor, max
                                           floor >= {min_floor} and floor <= {max_floor} and
                                             date = (select max(date) from {city}_rent)'''
 
+    if city == "krakow_land":
+        print("we are her")
+        statement = f'''SELECT 
+                                    district,
+
+                                    AVG(CASE date WHEN (select max(date) from {city}) then sqr_price end),
+
+                                    AVG(CASE date WHEN (select max(date) from {city}) then price end),
+
+                                    AVG(CASE date WHEN (select max(date) from {city}) then area end),
+
+                                    COUNT(CASE date WHEN (select max(date) from {city}) then price end),
+
+                                    cast(ROUND(
+                                    (avg(CASE date WHEN (select max(date) from {city}) then price end) -
+                                    avg(CASE date WHEN (select max(date) from {city} where date < 
+                                    (select max(date) from {city})) then price end)) /
+                                    avg(CASE date WHEN (select max(date) from {city} where date < 
+                                    (select max(date) from {city})) then price end)
+                                    * 100 ,1) as float),
+
+                                    COUNT(CASE date WHEN (select max(date) from {city}) then price end) -
+                                    COUNT(CASE date WHEN (select max(date) from {city} where date < 
+                                    (select max(date) from {city})) then price end)
+
+                                    FROM {city}
+
+                                    where area >= {min_area} and area <= {max_area}
+
+                                    group by district
+
+                                    order by avg(sqr_price) desc
+                                    '''
+
+        statement2 = f'''SELECT avg(sqr_price), avg(price), count(*)  FROM {city}
+                                     where area >= {min_area} and area <= {max_area} and
+                                        date = (select max(date) from {city})'''
+
     cur.execute(statement)
     queries = {1: []}
     iteration = 0
     avg = 0
     adds_count = 0
     for record in cur.fetchall():
+        print(record)
         try:
             iteration += 1
             avg += record[-2]
@@ -241,9 +280,10 @@ def index():
         return render_template('index.html', data=filter_select('krakow', form.min_rooms.data, form.max_rooms.data,
                                                                 form.min_area.data, form.max_area.data,
                                                                 form.min_floor.data, form.max_floor.data,
-                                                                form.rent_sell.data), form=form, house=False)
+                                                                form.rent_sell.data), form=form, house=False, land=False)
     return render_template('index.html', data=filter_select('krakow', 0, 100, 0, 10000, 0, 100, 0), form=form,
-                           house=False)
+                           house=False, land=False)
+
 
 @app.route('/krakow-house', methods=['GET', 'POST'])
 def krakow_house():
@@ -253,10 +293,22 @@ def krakow_house():
         return render_template('index.html', data=filter_select('krakow_house', form.min_rooms.data, form.max_rooms.data,
                                                                 form.min_area.data, form.max_area.data,
                                                                 form.min_floor.data, form.max_floor.data,
-                                                                form.rent_sell.data), form=form, house=True)
+                                                                form.rent_sell.data), form=form, house=True, land=False)
     return render_template('index.html', data=filter_select('krakow_house', 0, 100, 0, 10000, 0, 100, 0), form=form,
-                           house=True)
+                           house=True, land=False)
 
+
+@app.route('/krakow-land', methods=['GET', 'POST'])
+def krakow_land():
+    form = FilterForm()
+    validation_if_min_greater_than_max(form)
+    if form.validate_on_submit():
+        return render_template('index.html', data=filter_select('krakow_land', form.min_rooms.data, form.max_rooms.data,
+                                                                form.min_area.data, form.max_area.data,
+                                                                form.min_floor.data, form.max_floor.data,
+                                                                form.rent_sell.data), form=form, house=True, land=True)
+    return render_template('index.html', data=filter_select('krakow_land', 0, 100, 0, 100000, 0, 100, 0), form=form,
+                           house=True, land=True)
 
 @app.route('/warszawa', methods=['GET', 'POST'])
 def warszawa():
@@ -266,9 +318,11 @@ def warszawa():
         return render_template('index.html', data=filter_select('warszawa', form.min_rooms.data, form.max_rooms.data,
                                                                 form.min_area.data, form.max_area.data,
                                                                 form.min_floor.data, form.max_floor.data,
-                                                                form.rent_sell.data), form=form,house=False)
+                                                                form.rent_sell.data), form=form, house=False, land=False)
     return render_template('index.html', data=filter_select('warszawa', 0, 100, 0, 10000, 0, 100, 0), form=form,
-                           house=False)
+                           house=False, land=False)
+
+
 
 
 if __name__ == "__main__":
