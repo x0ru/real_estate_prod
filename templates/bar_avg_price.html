@@ -2,7 +2,7 @@
     {% if house == True %}
     <div class="bar-avg-price" id="container" style="width:570px; height:700px;"></div>
     {% else %}
-    <div class="bar-avg-price" id="container" style="width:570px;"></div>
+    <div class="bar-avg-price " id="container" style="width:570px;"></div>
     {% endif %}
     <script>
 
@@ -53,6 +53,7 @@ var chartData = [
     },
     primaryYAxis: {
     lineStyle: { width: 0 },
+        majorGridLines: { width: 0 },
         majorTickLines: { width: 0 },
         minorTickLines: { width: 0 },
         minimum: 0,
@@ -67,13 +68,13 @@ var chartData = [
         majorGridLines: { width: 0 },
         labelStyle: {
                fontWeight: '450',
-               size:'14',
-               color: '#000813',
+               size:'1',
+               color: '#365153',
                fontFamily: 'SanSerif',
               } ,
     },
 
-    background: '#000813',
+    background: '#335E62',
 
     palettes: ["#003566"],
 

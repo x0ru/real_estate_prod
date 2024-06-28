@@ -368,7 +368,7 @@ h1, h2, h3, h4, h5, h6,
 }
 
 h1, .h1 {
-  font-size: 2.5rem;
+  font-size: 2.8rem;
 }
 
 h2, .h2 {
@@ -384,7 +384,7 @@ h4, .h4 {
 }
 
 h5, .h5 {
-  font-size: 1.25rem;
+  font-size: 1rem;
 }
 
 h6, .h6 {
@@ -1960,9 +1960,9 @@ pre code {
   font-size: 1.05rem;
   line-height: 1.5;
   color: #fdfffc;
-  background-color: #000814;
+  background-color: #335E62;
   background-clip: padding-box;
-  border: 1px solid #000814;
+  border: 1px solid #335E62;
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
@@ -1974,9 +1974,9 @@ pre code {
   font-size: 1.05rem;
   line-height: 1.5;
   color: #82944A;
-  background-color: #000814;
+  background-color: #335E62;
   background-clip: padding-box;
-  border: 1px solid #000814;
+  border: 1px solid #335E62;
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
@@ -1988,8 +1988,8 @@ pre code {
 
 .form-control:focus {
   color: #fdfffc;
-  background-color: #000814;
-  border-color: #000814;
+  background-color: #14282A70;
+  border-color: #14282A70;
   outline: 0;
   box-shadow: 0 0 0 0.2rem #003566;
 }
@@ -4453,7 +4453,6 @@ tbody.collapse.show {
   word-wrap: break-word;
   background-color: #fff;
   background-clip: border-box;
-  border: 1px solid #003566;
   border-radius: 0.7rem;
 }
 
@@ -4477,6 +4476,7 @@ tbody.collapse.show {
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
   padding: 1.25rem;
+
 }
 
 .card-title {
@@ -4503,8 +4503,6 @@ tbody.collapse.show {
 .card-header {
   padding: 0.75rem 1.25rem;
   margin-bottom: 0;
-  background-color: rgba(0, 0, 0, 0.03);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
 
 .card-header:first-child {
@@ -8991,7 +8989,7 @@ a.text-dark:hover, a.text-dark:focus {
 /*# sourceMappingURL=bootstrap.css.map */
 
 .green {
-color: var(--green)
+color: LimeGreen;
 }
 
 .red {

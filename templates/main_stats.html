@@ -1,33 +1,40 @@
 
-<div class="card-group mt-5 text-primary">
-  <div class="card">
-    <div class="card-body text-center d-flex align-items-center justify-content-center">
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-3 text-primary d-flex justify-content-center align-items-center font-italic">
+        <h1>Weekly stats</h1>
+    </div>
+<div class="card-group col-9 text-primary">
+
+
+  <div class="card glass-morph">
+    <div class=" card-body text-center d-flex align-items-center justify-content-center">
       <div class="card-header">
       <h4>{{ "{:,}".format(data[2][0][0]|int)}} zł </h4>
           {% if data[2][0]|length == 3 %}
-          <p> Średnia cena za m2</p>
+          <h5 class="gray-font-color"> Średnia cena za m2</h5>
           {% else %}
-      <p> Średnia cena wynajmu bez czynszu</p>
+      <h5 class="gray-font-color"> Średnia cena wynajmu bez czynszu</h5>
           {% endif %}
       </div>
     </div>
   </div>
 
-    <div class="card">
+    <div class="card glass-morph border-right">
     <div class="card-body text-center d-flex align-items-center justify-content-center">
       <div class="card-header">
 
           {% if data[3][0] >= 0 %}
-          <h4 class="green">{{ data[3][0] }}%</h4>
+          <h4 class="green">+{{ data[3][0] }}%</h4>
           {% else %}
           <h4 class="red">{{ data[3][0] }}%</h4>
           {% endif %}
 
-        <p>Zmiana średniej ceny tydzień/tydzień</p>
+        <h5 class="gray-font-color">Tydzień/tydzień</h5>
       </div>
     </div>
           </div>
-          <div class="card">
+          <div class="card glass-morph">
     <div class="card-body text-center d-flex align-items-center justify-content-center">
       <div class="card-header">
           {% if data[2][0]|length == 3 %}
@@ -35,13 +42,13 @@
      {% else %}
         <h4>{{ data[2][0][1] }}</h4>
      {% endif %}
-        <p>Ilość ogłoszeń</p>
+        <h5 class="gray-font-color">Ilość ogłoszeń</h5>
       </div>
     </div>
           </div>
 
 
-    <div class="card">
+    <div class="card glass-morph">
     <div class="card-body text-center d-flex align-items-center justify-content-center">
       <div class="card-header">
 
@@ -53,8 +60,10 @@
           <h4 class="red">{{ data[3][1] }}</h4>
           {% endif %}
 
-        <p>Ilość ogłoszeń tydzień/tydzień</p>
+        <h5 class="gray-font-color">Tydzień/tydzień</h5>
       </div>
     </div>
           </div>
     </div>
+    </div>
+</div>

@@ -196,20 +196,66 @@ margin-right: 20px;
 
 
 .all-page {
-    background-image: url('../assets/img/landing.jpg');
+    background-image: url('/static/assets/img/alexander-andrews-A3DPhhAL6Zg-unsplash1.jpg');
     background-repeat:no-repeat;
     background-size:cover;
 }
 
-.card{
-background-color: #000814
-}
+
 
 .table-success,
 .table-success > th,
 .table-success > td {
-background-color: #000814;
+background-color: #14282A70;
+backdrop-filter: blur(20px);
 border-top: #001d3d solid 1px !important;
 border-bottom: #001d3d solid 1px !important;
 }
 
+.glass-morph{
+    background-color: rgba(0,0,0,0.1);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(20px);
+
+}
+
+.glass-morph1{
+    background-color: transparent;
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(20px);
+    background-image: linear-gradient(
+    360deg,
+    rgba(255,255,255,0.3),
+    rgba(100,100,100,0.2)
+    )
+}
+
+
+.glass-morph2{
+    background-color: transparent;
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(20px);
+    background-image: linear-gradient(
+    330deg,
+    rgba(255,255,255,0.3),
+    rgba(0,0,0,0.2)
+    )
+}
+
+.glass-morph-color{
+    background-color:#2C3333;
+}
+
+.give-more-margin {
+    margin-left: 5%;
+    margin-right: 5%;
+    font-style: italic;
+}
+
+.gray-font-color{
+color: #2C3333;
+}
+
+.hide-font-color{
+color: #42929A;
+}
