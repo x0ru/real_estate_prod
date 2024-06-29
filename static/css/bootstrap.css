@@ -1986,6 +1986,12 @@ color: #438EA0;
   border: 0;
 }
 
+.form-control1:focus {
+  color: #fdfffc;
+  background-color: #0D1714;
+  border-color: #0D1714;
+  outline: 0;
+}
 .form-control:focus {
   color: #fdfffc;
   background-color: #0D1714;
@@ -2584,14 +2590,14 @@ fieldset:disabled a.btn {
 
 .btn-success {
   color: #fff;
-  background-color: #82944A;
-  border-color: #2C3B00;
+  background-color: #A19943;
+  border-color: #A19943;
 }
 
 .btn-success:hover {
   color: #fff;
-  background-color: #82944A;
-  border-color: #2C3B00;
+  background-color: #A1994399;
+  border-color: #A19943;
 }
 
 .btn-success:focus, .btn-success.focus {
@@ -4500,7 +4506,7 @@ tbody.collapse.show {
 }
 
 .card-header {
-  padding: 0.75rem 1.25rem;
+  padding: 0rem 1.25rem;
   margin-bottom: 0;
 }
 
