@@ -196,9 +196,9 @@ margin-right: 20px;
 
 
 .all-page {
-    background-image: url('/static/assets/img/alexander-andrews-A3DPhhAL6Zg-unsplash1.jpg');
+    background-image: url('/static/assets/img/pawel-czerwinski-uEy4MoH-vqA-unsplash.jpg');
     background-repeat:no-repeat;
-    background-size:cover;
+    background-size: cover;
 }
 
 
@@ -213,8 +213,8 @@ border-bottom: #001d3d solid 1px !important;
 }
 
 .glass-morph{
-    background-color: rgba(0,0,0,0.1);
-    backdrop-filter: blur(30px);
+    background-color: #080D0715;
+    backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
 
 }
@@ -236,9 +236,9 @@ border-bottom: #001d3d solid 1px !important;
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(20px);
     background-image: linear-gradient(
-    330deg,
-    rgba(255,255,255,0.3),
-    rgba(0,0,0,0.2)
+    120deg,
+    rgba(255,255,255,0.2),
+    rgba(0,0,0,0.1)
     )
 }
 
@@ -253,7 +253,7 @@ border-bottom: #001d3d solid 1px !important;
 }
 
 .gray-font-color{
-color: #2C3333;
+color: #438EA0;
 }
 
 .hide-font-color{

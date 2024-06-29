@@ -1960,9 +1960,9 @@ pre code {
   font-size: 1.05rem;
   line-height: 1.5;
   color: #fdfffc;
-  background-color: #335E62;
+  background-color: transparent;
   background-clip: padding-box;
-  border: 1px solid #335E62;
+  border: 0px solid #0B1612;
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
@@ -1973,10 +1973,10 @@ pre code {
   padding: 0.375rem 0.75rem;
   font-size: 1.05rem;
   line-height: 1.5;
-  color: #82944A;
-  background-color: #335E62;
+color: #438EA0;
+  background-color: transparent;
   background-clip: padding-box;
-  border: 1px solid #335E62;
+  border: 0px solid #0B1612;
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
@@ -1988,10 +1988,9 @@ pre code {
 
 .form-control:focus {
   color: #fdfffc;
-  background-color: #14282A70;
-  border-color: #14282A70;
+  background-color: #0D1714;
+  border-color: #0D1714;
   outline: 0;
-  box-shadow: 0 0 0 0.2rem #003566;
 }
 
 .form-control::-webkit-input-placeholder {
