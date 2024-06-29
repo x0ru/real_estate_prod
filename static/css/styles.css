@@ -196,7 +196,7 @@ margin-right: 20px;
 
 
 .all-page {
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
     url('/static/assets/img/pawel-czerwinski-uEy4MoH-vqA-unsplash.jpg');
     background-repeat:no-repeat;
     background-size: cover;
@@ -244,7 +244,7 @@ border-bottom: #438EA0 solid 1px !important;
 }
 
 .glass-morph-color{
-    background-color:#0D1714;
+    background-color:#050707;
 }
 
 .give-more-margin {
@@ -263,4 +263,10 @@ color: #42929A;
 
 .yellow-triad-color{
 color: #A19943;
+}
+
+.header{
+padding-bottom:7vh;
+background: rgb(67,113,161);
+background: linear-gradient(90deg, rgba(67,113,161,1) 3%, rgba(67,142,161,1) 66%, rgba(67,83,161,1) 95%);
 }
