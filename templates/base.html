@@ -23,7 +23,24 @@
 
     </head>
     <body>
-    <div class="header">
+    <div class="header text-center">
+        <div class="my-navbar">
+            <div id="hide-warszawa">
+                <a class="a-left" href="#">Działki</a>
+                <a class="a-left" href="#">Domy</a>
+                <a class="a-left"  href="#">Mieszkania</a>
+            </div>
+            <a class="a-left" id="hide-main-warszawa" href="#">Warszawa</a>
+            <div class="main-menu">
+        <a id="a-menu" href="#">MENU</a>
+            </div>
+        <a class="a-left a-right" id="hide-main-krakow" href="#">Kraków</a>
+            <div id="hide-krakow">
+                <a class="a-left a-right"  href="#">Mieszkania</a>
+                <a class="a-left a-right" href="#">Domy</a>
+                <a class="a-left a-right" href="#">Działki</a>
+            </div>
+        </div>
         <div class="header-border"></div>
     </div>
         <!-- Your page content -->
@@ -33,7 +50,8 @@
 
         {% block scripts %}
             <!-- Optional JavaScript -->
-        {% endblock %}
+        {% endblock %}\
+    <script src="static/js/scripts.js"></script>
     </body>
 
 

@@ -268,56 +268,51 @@ color: #A19943;
 .pink-triad-color{
 color: #A14364;
 }
+
+.roar{
+font-weight:800;
+
+  font-size: 5.2em;
+  background: linear-gradient(to right,#438EA0 30%, #9A9341 60%, #A14364 90%);
+	background-size: auto auto;
+	background-clip: border-box;
+	background-size: 200% auto;
+	color: #fff;
+	background-clip: text;
+	text-fill-color: transparent;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	animation: textclip 6s linear infinite, opacity 5s linear;
+	display: inline-block;
+	animation-direction: alternate;
+
+}
+
 h1 {
 font-family: "Raleway", sans-serif;
   font-style: italic;
-  font-size: 3.5em;
+  font-size: 4em;
   letter-spacing: 2px;
-  font-weight: 600;
-  margin:40px auto;
-color: #A14364;
-  transition:.6s;
+  font-weight: 500;
+  color: #438EA0;
+  animation: opacity 5s linear;
+
 }
-h1:before,
-h1:after {
-  content:attr(data-text);
-  transition:.6s;
+
+@keyframes opacity {
+ from {
+    opacity: 0;
+ }to{
+    opacity: 1;
+ }
 }
-h1:before {
-  left: 0;
-  top: 0;
-  position: absolute;
-  z-index:-1;
-  text-shadow:
-   0px 0px,
-   0px 0px,
-   0px 0px,
-   0px 0px,
-   0px 0px,
-   0px 0px,
-   0px 0px,
-   0px 0px,
-   0px 0px,
-   0px 0px;
-  -webkit-mask:repeating-linear-gradient(45deg, transparent 0 3px, rgba(0,0,0,0.5) 0 6px);
-          mask:repeating-linear-gradient(45deg, transparent 0 3px, rgba(0,0,0,0.5) 0 6px);
+
+@keyframes textclip {
+	to {
+		background-position: 100% center;
+	}
 }
-h1:hover {
-  transform:translate(-10px,-10px);
-}
-h1:hover:before {
-  text-shadow:
-   1px 1px,
-   2px 2px,
-   3px 3px,
-   4px 4px,
-   5px 5px,
-   6px 6px,
-   7px 7px,
-   8px 8px,
-   9px 9px,
-   10px 10px;
-}
+
 
 
 .header{
@@ -326,8 +321,8 @@ background: radial-gradient(circle, rgba(5,7,7,1) 76%, rgba(40,47,47,1) 100%, rg
 }
 
 .header-border{
-border-bottom: 1px solid rgb(67,113,161);
-padding-top: 7vh;
+border-bottom: 1px solid #438EA0;
+
 margin-left: 30%;
 margin-right: 30%;
 }
@@ -338,4 +333,107 @@ font-family: "Raleway", sans-serif;
 
 h3 {
 font-weight: 650;
+}
+
+.more-padding{
+padding-top: 70px;
+}
+
+.my-navbar {
+padding: 2vh;
+font-family: "Raleway", sans-serif;
+color: #212529;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.main-menu{
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+#a-menu {
+    padding-left: 25px;
+      padding-right: 25px;
+      font-family: "Raleway", sans-serif;
+      color: #ecf0f1;
+      font-weight: 700;
+        letter-spacing: 3px;
+      text-decoration: none;
+      text-transform: uppercase;
+&:hover {
+        color: #ecf0f199;
+      text-decoration: none;
+      }
+}
+
+.a-left {
+
+      padding-left: 10px;
+      padding-right: 10px;
+      font-family: "Raleway", sans-serif;
+      color: #ecf0f1;
+      text-decoration: none;
+      text-transform: uppercase;
+
+      &::after {
+      text-decoration: none;
+        display: flex;
+        content: "";
+        height: 1px;
+        background: #438EA0;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.5s;
+      }
+
+      &:hover {
+        color: #ecf0f1;
+      text-decoration: none;
+      }
+
+      &:hover::after {
+        transform: scaleX(1);
+        transform-origin: right;
+      text-decoration: none;
+      }
+    }
+
+
+.a-right {
+      &::after {
+      transform-origin: right;
+      }
+
+      &:hover::after {
+      transform-origin: left;
+      }
+    }
+
+
+#hide-main-warszawa, #hide-main-krakow, #hide-krakow, #hide-warszawa{
+opacity: 0;
+cursor: default;
+pointer-events: none;
+}
+
+.line-menu{
+margin-left: 10px;
+margin-right: 10px;
+padding-left: 10px;
+padding-right: 10px;
+border-bottom: 1px solid #438EA0;
+pointer-events: none;
+
+
+
+}
+
+#hide-krakow, #hide-warszawa{
+margin: 0 5%;
+display:flex;
+justify-content: center;
+align-items: center;
 }
