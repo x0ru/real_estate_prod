@@ -152,7 +152,7 @@ left: 200px;
 
 
 .smaller_font {
-font-size: 100px important!;
+font-size: 100px important;
 }
 
 .my_class {
@@ -377,6 +377,7 @@ align-items: center;
       color: #ecf0f1;
       text-decoration: none;
       text-transform: uppercase;
+        animation: animMenu 5s;
 
       &::after {
       text-decoration: none;
@@ -417,6 +418,7 @@ align-items: center;
 opacity: 0;
 cursor: default;
 pointer-events: none;
+
 }
 
 .line-menu{
@@ -436,4 +438,69 @@ margin: 0 5%;
 display:flex;
 justify-content: center;
 align-items: center;
+}
+
+@keyframes animate-pop {
+  0% {
+    opacity: 0;
+    filter: blur(15px);
+  }
+
+  100% {
+    opacity: 1;
+    filter: blur(0px);
+  }
+}
+
+.play-anim-left {
+    animation: animate-slide-left 0.7s;
+}
+
+.play-anim-right{
+    animation: animate-slide-right 0.7s;
+}
+
+@keyframes animate-grow {
+  0% {
+    opacity: 0;
+    transform: scale(0, 1);
+    visibility: hidden;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+}
+
+@keyframes animate-flip {
+  0% {
+    opacity: 0;
+    transform: rotateX(-120deg) scale(0.9, 0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: rotateX(0deg) scale(1, 1);
+  }
+}
+
+@keyframes animate-slide-left {
+  0% {
+    opacity: 0;
+    transform: translate(30px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes animate-slide-right {
+    0% {
+        opacity: 0;
+        transform: translate(-30px, 0);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
 }

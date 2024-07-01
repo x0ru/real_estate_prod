@@ -18,22 +18,26 @@ menuCityKrakow.addEventListener('click', hideShowKrakow, false);
 
 
 function hideShowMainKrakow() {
-    if(menuCityKrakow.style.opacity == '0'){
-   menuCityKrakow.style.opacity = '1';
-   menuCityKrakow.style.cursor = 'pointer';
-   menuCityKrakow.style.pointerEvents = 'auto';
+   menuCityKrakow.classList.remove('play-anim-right');
+   if(menuCityKrakow.style.opacity === '0'){
+      menuCityKrakow.classList.add('play-anim-right')
+      menuCityKrakow.style.opacity = '1';
+      menuCityKrakow.style.cursor = 'pointer';
+      menuCityKrakow.style.pointerEvents = 'auto';
    } else {
    menuCityKrakow.style.opacity = '0';
    menuCityKrakow.style.cursor = 'default';
    menuCityKrakow.style.pointerEvents = 'none';
-   if (menuKrakow.style.opacity == '1'){
+   if (menuKrakow.style.opacity === '1'){
    hideShowKrakow();
    }
    }
 }
 
 function hideShowMainWarszawa() {
-if(menuCityWarszawa.style.opacity == '0'){
+   menuCityWarszawa.classList.remove('play-anim-left');
+if(menuCityWarszawa.style.opacity === '0'){
+   menuCityWarszawa.classList.add('play-anim-left');
    menuCityWarszawa.style.opacity = '1';
    menuCityWarszawa.style.cursor = 'pointer';
    menuCityWarszawa.style.pointerEvents = 'auto';
@@ -41,14 +45,16 @@ if(menuCityWarszawa.style.opacity == '0'){
    menuCityWarszawa.style.opacity = '0';
    menuCityWarszawa.style.cursor = 'default';
    menuCityWarszawa.style.pointerEvents = 'none';
-   if (menuWarszawa.style.opacity == '1'){
+   if (menuWarszawa.style.opacity === '1'){
    hideShowWarszawa();
-   }
+      }
    }
 }
 
 function hideShowKrakow() {
-   if(menuKrakow.style.opacity == '0'){
+   menuKrakow.classList.remove('play-anim-right');
+   if(menuKrakow.style.opacity === '0'){
+      menuKrakow.classList.add('play-anim-right');
    menuKrakow.style.opacity = '1';
    menuKrakow.style.cursor = 'pointer';
    menuKrakow.style.pointerEvents = 'auto';
@@ -60,7 +66,9 @@ function hideShowKrakow() {
 }
 
 function hideShowWarszawa() {
-   if(menuWarszawa.style.opacity == '0'){
+   menuWarszawa.classList.remove('play-anim-left');
+   if(menuWarszawa.style.opacity === '0'){
+      menuWarszawa.classList.add('play-anim-left');
    menuWarszawa.style.opacity = '1';
    menuWarszawa.style.cursor = 'pointer';
    menuWarszawa.style.pointerEvents = 'auto';
