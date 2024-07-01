@@ -1,6 +1,7 @@
 
 
-    <div id="container1" style="width:570px;"></div>
+
+    <div id="container1_out" style="width:570px;"></div>
     <script>
 
 
@@ -11,7 +12,7 @@
                 {
                     dataSource: [
 
-                        {% for i in data[1] %}
+                        {% for i in data[4] %}
                         {% if i[0] != "N/A" %}
 
                         { color: 'red',
@@ -67,7 +68,7 @@
         tooltip: { enable: true},
 
         });
-        pie1.appendTo('#container1');
+        pie1.appendTo('#container1_out');
 
 
     </script>

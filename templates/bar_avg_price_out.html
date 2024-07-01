@@ -1,11 +1,11 @@
 
-    <div class="bar-avg-price " id="container" style="width:570px; height: 500px;"></div>
+    <div class="bar-avg-price " id="container_out" style="width:570px; height: 500px;"></div>
     <script>
 
 
 
 var chartData = [
-    {% for i in data[1] %}
+    {% for i in data[4] %}
                         {% if i[0] != "N/A" %}
 
                         { 'x': {% if i[0] == "Krzesławickie" %}
@@ -54,9 +54,9 @@ var chartData = [
         minorTickLines: { width: 0 },
         minimum: 0,
         {% if data[2][0]|length == 3 %}
-        maximum: {{ data[1][0][1] }},
+        maximum: {{ data[4][0][1] }},
         {% else %}
-        maximum: {{ data[1][0][1]/data[1][0][2] }},
+        maximum: {{ data[4][0][1]/data[4][0][2] }},
         {% endif %}
 
         interval: 5000,
@@ -94,7 +94,7 @@ var chartData = [
     }],
 
 });
-chart.appendTo("#container")
+chart.appendTo("#container_out")
 
 
     </script>

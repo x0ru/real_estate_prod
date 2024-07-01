@@ -26,3 +26,35 @@
 
   <!-- end of card group -->
 </div>
+
+{% if house == True %}
+
+<div class="card-group mt-5 text-primary">
+
+  <!-- Card with average prices -->
+  <div class="card glass-morph-color">
+    <div class="card-body text-center ">
+      <div class="card-header">
+        {% if data[2][0]|length == 3 %}
+        <h4>Średnia cena za metr kwadratowy</h4>
+        {% else %}
+        <h4>Średnia cena wynajmu za metr kwadratowy</h4>
+        {% endif %}
+      </div>
+      {% include 'bar_avg_price_out.html'%}
+    </div>
+  </div>
+
+  <!-- Card with pie chart -->
+  <div class="card glass-morph-color">
+    <div class="card-body text-center">
+      <div class="card-header">
+        <h4>Liczba Ogłoszeń</h4>
+      </div>
+      {% include 'pie_ads_number_out.html'%}
+    </div>
+  </div>
+
+  <!-- end of card group -->
+</div>
+{% endif %}

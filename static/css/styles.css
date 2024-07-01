@@ -43,10 +43,14 @@ margin-right: 20px;
 .table-success,
 .table-success > th,
 .table-success > td {
-background-color: #080D0740;
-backdrop-filter: blur(20px);
+background-color: #050707;
 border-top: #438EA0 solid 1px !important;
 border-bottom: #438EA0 solid 1px !important;
+}
+
+.table-success > th {
+
+    border-top: #050707 solid 1px !important;
 }
 
 .glass-morph{
