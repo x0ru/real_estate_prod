@@ -28,7 +28,11 @@ cur = con.cursor()
 #           ", area INT, sqr_price INT, floor INT);")
 #cur.execute("CREATE TABLE krakow_land(id INTEGER PRIMARY KEY, date TIMESTAMP, price INT, district VARCHAR(255),"
 #          " area INT, sqr_price INT);")
-#con.commit()
+#cur.execute("CREATE TABLE warszawa_house(id INTEGER PRIMARY KEY, date TIMESTAMP, price INT, district VARCHAR(255), rooms INT"
+#           ", area INT, sqr_price INT, floor INT);")
+# cur.execute("CREATE TABLE warszawa_land(id INTEGER PRIMARY KEY, date TIMESTAMP, price INT, district VARCHAR(255),"
+#          " area INT, sqr_price INT);")
+# con.commit()
 
 
 headers = {'User-Agent': '...'}
@@ -49,7 +53,12 @@ cities = {
                       f'warszawa?viewType=listing&page=', "warszawa", 'Warszawa'],
     'warszawa_rent': [f'https://www.otodom.pl/pl/wyniki/wynajem/mieszkanie/mazowieckie/warszawa/warszawa/'
                       f'warszawa?ownerTypeSingleSelect=ALL&distanceRadius=0&viewType=listing&page=', 'warszawa_rent',
-                      'Warszawa']
+                      'Warszawa'],
+    'warszawa_house': [f'https://www.otodom.pl/pl/wyniki/sprzedaz/dom/mazowieckie/warszawa/warszawa/'
+                       f'warszawa?ownerTypeSingleSelect=ALL&distanceRadius=5&viewType=listing&page=', 'warszawa_house'],
+    'warszawa_land': [f'https://www.otodom.pl/pl/wyniki/sprzedaz/dzialka/mazowieckie/warszawa/warszawa/'
+                       f'warszawa?distanceRadius=5&plotType=%5BBUILDING%5D&by=DEFAULT&direction=DESC&'
+                       f'viewType=listing&page=', 'warszawa_land']
 }
 
 
@@ -261,5 +270,5 @@ def deleting_duplicates(city, rents, rooms):
     con.commit()
 
 
-#land_sell(cities["krakow_land"])
-deleting_duplicates(cities['krakow_land'][1], "", "")
+# land_sell(cities["warszawa_land"])
+# deleting_duplicates(cities['warszawa_land'][1], "", "")
