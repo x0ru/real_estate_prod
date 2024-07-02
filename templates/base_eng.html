@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+    {% block head %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js" type="text/javascript"></script>
+    {% block styles %}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+
+    {% endblock %}
+
+    <title>Poland stats</title>
+
+    <!-- Latest compiled and minified CSS -->
+
+    {% endblock %}
+
+</head>
+<body>
+<div class="header text-center">
+    <div class="my-navbar">
+        <div id="hide-warszawa">
+            <a class="a-left" href="{{ url_for('warszawa_land') }}">Land</a>
+            <a class="a-left" href="{{ url_for('warszawa_house') }}">Houses</a>
+            <a class="a-left"  href="{{ url_for('warszawa_flat') }}">Flats</a>
+        </div>
+        <a class="a-left" id="hide-main-warszawa" href="#">Warszawa</a>
+        <div class="main-menu">
+            <a id="a-menu" href="#">MENU</a>
+        </div>
+        <a class="a-left a-right" id="hide-main-krakow" href="#">Kraków</a>
+        <div id="hide-krakow">
+            <a class="a-left a-right"  href="{{ url_for('krakow_flat') }}">Flats</a>
+            <a class="a-left a-right" href="{{ url_for('krakow_house') }}">Houses</a>
+            <a class="a-left a-right" href="{{ url_for('krakow_land') }}">Land</a>
+        </div>
+    </div>
+    <div class="header-border"></div>
+</div>
+<!-- Your page content -->
+{% block content %}
+
+{% endblock %}
+
+{% block scripts %}
+<!-- Optional JavaScript -->
+{% endblock %}
+<script src="{{url_for('static', filename='js/scripts.js')}}"></script>
+</body>
+
+
+</html>

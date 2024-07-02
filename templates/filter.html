@@ -1,0 +1,55 @@
+ <div class="container">
+<div class="card glass-morph" >
+        <div class="card-body">
+            <form  method="post">
+                {{ form.csrf_token }}
+                {{ form.hidden_tag() }}
+                <div class="row">
+                    <div class="col-1-25 ml-1">
+                        {{ form.min_rooms(class="form-control", disabled=land) }}
+                    </div>
+                    <div class="col-1-25">
+                        {{ form.max_rooms(class="form-control", disabled=land) }}
+                    </div>
+                    {% if (land == True) and (house==True) %}
+                    <div class="col-1-1">
+                        {{ form.min_area_land(class="form-control") }}
+                    </div>
+                    <div class="col-1-1">
+                        {{ form.max_area_land(class="form-control") }}
+                    </div>
+                    {% elif (house == True) and (land == False) %}
+                    <div class="col-1-1">
+                        {{ form.min_area_house(class="form-control") }}
+                    </div>
+                    <div class="col-1-1">
+                        {{ form.max_area_house(class="form-control") }}
+                    </div>
+                    {% else %}
+                    <div class="col-1-1">
+                        {{ form.min_area(class="form-control") }}
+                    </div>
+                    <div class="col-1-1">
+                        {{ form.max_area(class="form-control") }}
+                    </div>
+                    {% endif %}
+                    <div class="col-1-25">
+                        {{ form.min_floor(class="form-control", disabled=house) }}
+                    </div>
+                    <div class="col-1-25">
+                        {{ form.max_floor(class="form-control", disabled=house) }}
+                    </div>
+                    <div class="col-1-5">
+                        {{ form.rent_sell(class="form-control1", disabled=house) }}
+                    </div>
+                    <div class="col-1-25">
+                        {{ form.submit(class="btn btn-success btn-md ml-5") }}
+                    </div>
+                    <div class="col-1-25">
+                        <a href="{{url_for('krakow_flat')}}" class="btn btn-outline-primary ml-5" id="reset-page-form">Reset</a>
+                    </div></div>
+            </form>
+
+        </div>
+    </div>
+ </div>

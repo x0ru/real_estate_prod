@@ -1,11 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'base_eng.html' %}
 
 
 {% block content %}
 
 <div class="all-page pt-5">
 
-    {% include 'logo.html' %}
+    {% include 'logo_eng.html' %}
 
     <a class="btn" id="english-language" href="{{url_for('index_eng')}}">Eng</a>
     <a class="btn" id="polish-language" href="{{url_for('index')}}">Pl</a>
@@ -13,16 +13,16 @@
     <!-- Checking if any records are fetched otherwise return no record page -->
     {% if data[1]|length > 0 %}
 
-    {% include 'main_stats.html' %}
+    {% include 'main_stats_eng.html' %}
 
-    {% include 'container_bar_pie_sell.html'  %}
+    {% include 'container_bar_pie_sell_eng.html'  %}
 
-    {% include 'table.html'  %}
+    {% include 'table_eng.html'  %}
 
     {% else %}
 
       <!-- Return no record page if no records are fetched -->
-    {% include 'no_records.html'  %}
+    {% include 'no_records_eng.html'  %}
 
     {% endif %}
 

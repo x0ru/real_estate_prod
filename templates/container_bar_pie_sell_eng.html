@@ -6,9 +6,9 @@
     <div class="card-body text-center ">
       <div class="card-header">
         {% if data[2][0]|length == 3 %}
-      <h4>Średnia cena za metr kwadratowy</h4>
+      <h4>Average price for square meter</h4>
         {% else %}
-        <h4>Średnia cena wynajmu za metr kwadratowy</h4>
+        <h4>Average price of rent for square meter</h4>
         {% endif %}
       </div>
       {% include 'bar_avg_price.html'%}
@@ -19,7 +19,7 @@
   <div class="card glass-morph-color">
     <div class="card-body text-center">
       <div class="card-header">
-        <h4>Liczba Ogłoszeń</h4>
+        <h4>Advertisements quantity</h4>
       </div>
     {% include 'pie_ads_number.html'%}
     </div>
@@ -37,9 +37,9 @@
     <div class="card-body text-center ">
       <div class="card-header">
         {% if data[2][0]|length == 3 %}
-        <h4>Średnia cena za metr kwadratowy</h4>
+        <h4>Average price of rent for square meter</h4>
         {% else %}
-        <h4>Średnia cena wynajmu za metr kwadratowy</h4>
+        <h4>Average price of rent for square meter</h4>
         {% endif %}
       </div>
       {% include 'bar_avg_price_out.html'%}
@@ -50,7 +50,7 @@
   <div class="card glass-morph-color">
     <div class="card-body text-center">
       <div class="card-header">
-        <h4>Liczba Ogłoszeń</h4>
+        <h4>Advertisements quantity</h4>
       </div>
       {% include 'pie_ads_number_out.html'%}
     </div>
