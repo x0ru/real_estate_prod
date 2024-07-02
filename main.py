@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, session, request
+from flask import Flask, render_template, redirect, session
 from flask_wtf import FlaskForm, CSRFProtect
 from wtforms import SubmitField, SelectField
 import secrets
@@ -108,25 +108,6 @@ class FilterFormEng(FlaskForm):
     rent_sell = SelectField('', choices=[(0, "Sell"), (1, "Rent")])
 
     submit = SubmitField('Filter')
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-    POSTGRES_DATABASE_HOST_ADDRESS = os.environ.get('POSTGRES_DATABASE_HOST_ADDRESS')
-    POSTGRES_DATABASE_NAME = os.environ.get('POSTGRES_DATABASE_NAME')
-    POSTGRES_USERNAME = os.environ.get('POSTGRES_USERNAME')
-    POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD')
-    POSTGRES_CONNECTION_PORT = "5432"
-
-    db_info = "host='%s' dbname='%s' user='%s' password='%s' sslmode='require'  port='%s'" % (
-    POSTGRES_DATABASE_HOST_ADDRESS, POSTGRES_DATABASE_NAME, POSTGRES_USERNAME, POSTGRES_PASSWORD,
-    POSTGRES_CONNECTION_PORT)
-    con = psycopg2.connect(db_info)
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-database="real_estate", user='postgres', password='', host="localhost", port=5432
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
 def filter_select(city, min_rooms, max_rooms, min_area, max_area, min_floor, max_floor, rent_sell):
@@ -142,7 +123,6 @@ def filter_select(city, min_rooms, max_rooms, min_area, max_area, min_floor, max
         POSTGRES_CONNECTION_PORT)
     con = psycopg2.connect(db_info)
     cur = con.cursor()
-
 
     statement = f'''SELECT 
                                 district,
@@ -289,7 +269,7 @@ def filter_select(city, min_rooms, max_rooms, min_area, max_area, min_floor, max
                 else:
                     print(record)
             except:
-                None
+                pass
         else:
             try:
                 iteration1 += 1
@@ -300,12 +280,12 @@ def filter_select(city, min_rooms, max_rooms, min_area, max_area, min_floor, max
                     queries[4].append(record)
                 else:
                     print(record)
-            except:
-                None
+            except :
+                pass
         try:
             queries[3] = [round(avg/iteration, 1), adds_count]
         except ZeroDivisionError:
-            None
+            pass
     cur.execute(statement2)
     queries[2] = cur.fetchall()
     con.close()
@@ -343,10 +323,12 @@ def index():
     session['language'] = 'pl'
     return redirect('krakow')
 
+
 @app.route('/en')
 def index_eng():
     session['language'] = "eng"
     return redirect('krakow')
+
 
 @app.route('/krakow', methods=['GET', 'POST'])
 def krakow_flat():
@@ -359,13 +341,13 @@ def krakow_flat():
     validation_if_min_greater_than_max(form)
     if form.validate_on_submit():
         return render_template(page, data=filter_select('krakow', form.min_rooms.data,
-                                                                form.max_rooms.data, form.min_area.data,
-                                                                form.max_area.data, form.min_floor.data,
-                                                                form.max_floor.data, form.rent_sell.data), form=form,
+                                                        form.max_rooms.data, form.min_area.data,
+                                                        form.max_area.data, form.min_floor.data,
+                                                        form.max_floor.data, form.rent_sell.data), form=form,
                                house=False, land=False, city='krakow')
     return render_template(page, data=filter_select('krakow', 0, 100,
-                                                            0, 10000, 0, 100,
-                                                            0), form=form,
+                                                    0, 10000, 0, 100,
+                                                    0), form=form,
                            house=False, land=False, city='krakow')
 
 
@@ -380,13 +362,13 @@ def krakow_house():
     validation_if_min_greater_than_max(form)
     if form.is_submitted():
         return render_template(page, data=filter_select('krakow_house',
-                                                                form.min_rooms.data, form.max_rooms.data,
-                                                                form.min_area_house.data, form.max_area_house.data,
-                                                                0, 100, 0), form=form,
+                                                        form.min_rooms.data, form.max_rooms.data,
+                                                        form.min_area_house.data, form.max_area_house.data,
+                                                        0, 100, 0), form=form,
                                house=True, land=False, city='krakow')
     return render_template(page, data=filter_select('krakow_house', 0,
-                                                            100, 0, 10000, 0,
-                                                            100, 0), form=form,
+                                                    100, 0, 10000, 0,
+                                                    100, 0), form=form,
                            house=True, land=False, city='krakow')
 
 
@@ -402,13 +384,13 @@ def krakow_land():
     if form.is_submitted():
         print("yes its validates")
         return render_template(page, data=filter_select('krakow_land', 0,
-                                                                100, form.min_area_land.data,
-                                                                form.max_area_land.data, 0, 100,
-                                                                0), form=form,
+                                                        100, form.min_area_land.data,
+                                                        form.max_area_land.data, 0, 100,
+                                                        0), form=form,
                                house=True, land=True, city='krakow')
     return render_template(page, data=filter_select('krakow_land', 0,
-                                                            100, 0, 100000, 0,
-                                                            100,0), form=form,
+                                                    100, 0, 100000, 0,
+                                                    100, 0), form=form,
                            house=True, land=True, city='krakow')
 
 
@@ -423,13 +405,13 @@ def warszawa_flat():
     validation_if_min_greater_than_max(form)
     if form.validate_on_submit():
         return render_template(page, data=filter_select('warszawa', form.min_rooms.data,
-                                                                form.max_rooms.data, form.min_area.data,
-                                                                form.max_area.data, form.min_floor.data,
-                                                                form.max_floor.data, form.rent_sell.data),
+                                                        form.max_rooms.data, form.min_area.data,
+                                                        form.max_area.data, form.min_floor.data,
+                                                        form.max_floor.data, form.rent_sell.data),
                                form=form, house=False, land=False, city="warszawa")
     return render_template(page, data=filter_select('warszawa', 0,
-                                                            100, 0, 10000, 0,
-                                                            100, 0), form=form,
+                                                    100, 0, 10000, 0,
+                                                    100, 0), form=form,
                            house=False, land=False, city='warszawa')
 
 
@@ -444,13 +426,13 @@ def warszawa_house():
     validation_if_min_greater_than_max(form)
     if form.is_submitted():
         return render_template(page, data=filter_select('warszawa_house',
-                                                                form.min_rooms.data, form.max_rooms.data,
-                                                                form.min_area_house.data, form.max_area_house.data,
-                                                                0, 100, 0), form=form,
+                                                        form.min_rooms.data, form.max_rooms.data,
+                                                        form.min_area_house.data, form.max_area_house.data,
+                                                        0, 100, 0), form=form,
                                house=True, land=False, city="warszawa")
     return render_template(page, data=filter_select('warszawa_house', 0,
-                                                            100, 0, 10000, 0,
-                                                            100, 0), form=form,
+                                                    100, 0, 10000, 0,
+                                                    100, 0), form=form,
                            house=True, land=False, city="warszawa")
 
 
@@ -466,13 +448,13 @@ def warszawa_land():
     if form.is_submitted():
         print("yes its validates")
         return render_template(page, data=filter_select('warszawa_land', 0,
-                                                                100, form.min_area_land.data,
-                                                                form.max_area_land.data, 0, 100,
-                                                                0), form=form,
+                                                        100, form.min_area_land.data,
+                                                        form.max_area_land.data, 0, 100,
+                                                        0), form=form,
                                house=True, land=True, city="warszawa")
     return render_template(page, data=filter_select('warszawa_land', 0,
-                                                            100, 0, 100000, 0,
-                                                            100,  0), form=form,
+                                                    100, 0, 100000, 0,
+                                                    100,  0), form=form,
                            house=True, land=True, city="warszawa")
 
 
