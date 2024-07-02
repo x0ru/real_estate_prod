@@ -1,4 +1,8 @@
 <div class="container">
+
+  <!-- Only for flats where we don't have data outside the city -->
+  {% if house == False %}
+
 <div class="card-group mt-5 text-primary">
 
   <!-- Card with average prices -->
@@ -28,21 +32,28 @@
   <!-- end of card group -->
 </div>
 
-{% if house == True %}
+  <!-- Data for both in the city and outside for houses and land -->
+{% else %}
 
-<div class="card-group mt-5 text-primary">
+
+  <div class="gallery js-flickity">
+  <div class="gallery-cell">
+
+    <!-- New gallery cell for carousel. This is fetching outside the city -->
+
+   <div class="card-group mt-5 text-primary">
 
   <!-- Card with average prices -->
   <div class="card glass-morph-color">
     <div class="card-body text-center ">
       <div class="card-header">
         {% if data[2][0]|length == 3 %}
-        <h4>Średnia cena za metr kwadratowy</h4>
+      <h4>Średnia cena za metr kwadratowy</h4>
         {% else %}
         <h4>Średnia cena wynajmu za metr kwadratowy</h4>
         {% endif %}
       </div>
-      {% include 'bar_avg_price_out.html'%}
+      {% include 'bar_avg_price.html'%}
     </div>
   </div>
 
@@ -52,12 +63,49 @@
       <div class="card-header">
         <h4>Liczba Ogłoszeń</h4>
       </div>
-      {% include 'pie_ads_number_out.html'%}
+    {% include 'pie_ads_number.html'%}
     </div>
   </div>
 
   <!-- end of card group -->
 </div>
+  </div>
+
+   <!-- New gallery cell for carousel. This is fetching outside the city -->
+
+  <div class="gallery-cell">
+    <div class="card-group mt-5 text-primary">
+
+      <!-- Card with average prices -->
+      <div class="card glass-morph-color">
+        <div class="card-body text-center ">
+          <div class="card-header">
+            {% if data[2][0]|length == 3 %}
+            <h4>Średnia cena za metr kwadratowy</h4>
+            {% else %}
+            <h4>Średnia cena wynajmu za metr kwadratowy</h4>
+            {% endif %}
+          </div>
+          {% include 'bar_avg_price_out.html'%}
+        </div>
+      </div>
+
+      <!-- Card with pie chart -->
+      <div class="card glass-morph-color">
+        <div class="card-body text-center">
+          <div class="card-header">
+            <h4>Liczba Ogłoszeń</h4>
+          </div>
+          {% include 'pie_ads_number_out.html'%}
+        </div>
+      </div>
+
+      <!-- end of card group -->
+    </div>
+  </div>
+</div>
+
+
 {% endif %}
 
 </div>

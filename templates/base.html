@@ -13,6 +13,7 @@
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
             <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
                   rel="stylesheet">
+            <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
 
         {% endblock %}
 
@@ -49,7 +50,6 @@
                      src="{{ url_for('static', filename='assets/img/translate_1.png') }}">
             </div>
         </div>
-
         <div class="header-border"></div>
     </div>
         <!-- Your page content -->
@@ -58,9 +58,13 @@
         {% endblock %}
 
         {% block scripts %}
-            <!-- Optional JavaScript -->
-        {% endblock %}
+
+    <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
     <script src="{{url_for('static', filename='js/scripts.js')}}"></script>
+
+        {% endblock %}
+
+
     </body>
 
 

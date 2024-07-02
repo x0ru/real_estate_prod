@@ -6,6 +6,13 @@ const menuWarszawa = document.getElementById("hide-warszawa");
 const languageMenu = document.getElementById("language-menu");
 const languagesToChoose = document.getElementById('languages-to-choose');
 
+var flkty = new Flickity( '.main-gallery', {
+  // options
+  cellAlign: 'left',
+  contain: true
+});
+
+
 menuKrakow.style.opacity = '0';
 menuWarszawa.style.opacity = '0';
 menuCityKrakow.style.opacity = '0';
