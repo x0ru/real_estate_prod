@@ -368,3 +368,13 @@ align-items: center;
     }
 }
 
+.card-header-custom {
+  border-radius: .25rem .25rem 0 0;
+  padding: .75rem 1.25rem;
+  background-color: #050707;
+  border-bottom: none;
+}
+.card-header-custom + .card-group > .card {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}

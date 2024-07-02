@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, session
+from flask import Flask, render_template, redirect, session, request
 from flask_wtf import FlaskForm, CSRFProtect
 from wtforms import SubmitField, SelectField
 import secrets
@@ -302,7 +302,10 @@ def filter_select(city, min_rooms, max_rooms, min_area, max_area, min_floor, max
                     print(record)
             except:
                 None
-        queries[3] = [round(avg/iteration, 1), adds_count]
+        try:
+            queries[3] = [round(avg/iteration, 1), adds_count]
+        except ZeroDivisionError:
+            None
     cur.execute(statement2)
     queries[2] = cur.fetchall()
     con.close()

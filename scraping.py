@@ -258,6 +258,7 @@ def land_sell(city):
         if page == last_page + 1:
             start = False
 
+
 def deleting_duplicates(city, rents, rooms):
     delete_statement = f"delete from {city} WHERE id IN " \
                            f" (SELECT id FROM "\

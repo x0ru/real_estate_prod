@@ -46,7 +46,7 @@
                         {{ form.submit(class="btn btn-success btn-md ml-5") }}
                     </div>
                     <div class="col-1-25">
-                        <a href="{{url_for('krakow_flat')}}" class="btn btn-outline-primary ml-5" id="reset-page-form">Reset</a>
+                        <a href="{{ url_for(request.endpoint, **request.view_args) }}" class="btn btn-outline-primary ml-5" id="reset-page-form">Reset</a>
                     </div></div>
             </form>
 
