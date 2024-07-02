@@ -314,7 +314,7 @@ def filter_select(city, min_rooms, max_rooms, min_area, max_area, min_floor, max
 
 def validation_if_min_greater_than_max(form):
 
-    if form.min_floor.data is None or form.max_floor.data is None:
+    if form.min_rooms.data is None or form.max_rooms.data is None:
         pass
     elif int(form.min_rooms.data) > int(form.max_rooms.data):
         form.max_rooms.data = form.max_rooms.choices[0][0]
@@ -326,6 +326,14 @@ def validation_if_min_greater_than_max(form):
         pass
     elif int(form.min_floor.data) > int(form.max_floor.data):
         form.max_floor.data = form.max_floor.choices[0][0]
+    if form.min_area_house.data is None or form.max_area_house.data is None:
+        pass
+    elif int(form.min_area_house.data) > int(form.max_area_house.data):
+        form.max_area_house.data = form.max_area_house.choices[0][0]
+    if form.min_area_land.data is None or form.max_area_land.data is None:
+        pass
+    elif int(form.min_area_land.data) > int(form.max_area_land.data):
+        form.max_area_land.data = form.max_area_land.choices[0][0]
     print([form.max_rooms.data, form.max_area.data, form.max_floor.data])
     return [form.max_rooms.data, form.max_area.data, form.max_floor.data]
 
@@ -369,6 +377,7 @@ def krakow_house():
     else:
         page = 'index_eng.html'
         form = FilterFormEng()
+    validation_if_min_greater_than_max(form)
     if form.is_submitted():
         return render_template(page, data=filter_select('krakow_house',
                                                                 form.min_rooms.data, form.max_rooms.data,
@@ -389,6 +398,7 @@ def krakow_land():
     else:
         page = 'index_eng.html'
         form = FilterFormEng()
+    validation_if_min_greater_than_max(form)
     if form.is_submitted():
         print("yes its validates")
         return render_template(page, data=filter_select('krakow_land', 0,
@@ -431,6 +441,7 @@ def warszawa_house():
     else:
         page = 'index_eng.html'
         form = FilterFormEng()
+    validation_if_min_greater_than_max(form)
     if form.is_submitted():
         return render_template(page, data=filter_select('warszawa_house',
                                                                 form.min_rooms.data, form.max_rooms.data,
@@ -451,6 +462,7 @@ def warszawa_land():
     else:
         page = 'index_eng.html'
         form = FilterFormEng()
+    validation_if_min_greater_than_max(form)
     if form.is_submitted():
         print("yes its validates")
         return render_template(page, data=filter_select('warszawa_land', 0,
