@@ -41,6 +41,14 @@
             <a class="a-left a-right" href="{{ url_for('krakow_house') }}">Houses</a>
             <a class="a-left a-right" href="{{ url_for('krakow_land') }}">Land</a>
         </div>
+        <div class="icon-languages-div">
+                <div id="languages-to-choose">
+                <a class="a-left" id="english-language" href="{{url_for('index_eng')}}">English</a>
+                <a class="a-left" id="polish-language" href="{{url_for('index')}}">Polish</a>
+                </div>
+                <img class="icon-languages" id="language-menu"
+                     src="{{ url_for('static', filename='assets/img/translate_1.png') }}">
+        </div>
     </div>
     <div class="header-border"></div>
 </div>

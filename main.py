@@ -13,17 +13,11 @@ csrf = CSRFProtect(app)
 
 
 class FilterForm(FlaskForm):
-    if session['language'] == 'pl':
-        min_rooms_name, max_rooms_name, min_floor_name, max_floor_name, rent_sell_name1, rent_sell_name2 = \
-            'Min pokoje', 'Max pokoje', 'Min piętro', 'Max piętro', 'Sprzedaż', 'Wynajem'
-    else:
-        min_rooms_name, max_rooms_name, min_floor_name, max_floor_name, rent_sell_name1, rent_sell_name2 = \
-            'Min rooms', 'Max rooms', 'Min floor', 'Max floor', 'Sell', 'Rent'
 
-    min_rooms = SelectField('', choices=[(0, min_rooms_name), (1, "1"), (2, "2"), (3, "3"), (4, "4"), (5, "5+")],
+    min_rooms = SelectField('', choices=[(0, "Min pokoje"), (1, "1"), (2, "2"), (3, "3"), (4, "4"), (5, "5+")],
                             validate_choice=False)
 
-    max_rooms = SelectField('', choices=[(1001, max_rooms_name), (1, "1"), (2, "2"), (3, "3"), (4, "4"), (100, "5+")],
+    max_rooms = SelectField('', choices=[(1001, "Max pokoje"), (1, "1"), (2, "2"), (3, "3"), (4, "4"), (100, "5+")],
                             validate_choice=False)
 
     min_area = SelectField('', choices=[(0, "Min m2"), (10, "10m2"), (20, "20m2"), (30, "30m2"), (40, "40m2"),
@@ -54,19 +48,66 @@ class FilterForm(FlaskForm):
                                               (200, "200m2"), (250, "250m2"), (300, "300m2"), (350, "350m2"),
                                               (400, "400m2"), (100000, "450m2+")], validate_choice=False)
 
-    min_floor = SelectField('', choices=[(0, min_floor_name), (1, "1"), (2, "2"), (3, "3"), (4, "4"), (5, "5"),
+    min_floor = SelectField('', choices=[(0, "Min piętro"), (1, "1"), (2, "2"), (3, "3"), (4, "4"), (5, "5"),
                                          (6, "6"), (7, "7"), (8, "8"), (9, "9"), (10, "10"), (11, "11"), (12, "12"),
                                          (13, "13"), (14, "14"), (15, "15+")], validate_choice=False)
 
-    max_floor = SelectField('', choices=[(101, max_floor_name), (1, "1"), (2, "2"), (3, "3"), (4, "4"), (5, "5"),
+    max_floor = SelectField('', choices=[(101, "Max piętro"), (1, "1"), (2, "2"), (3, "3"), (4, "4"), (5, "5"),
                                          (6, "6"), (7, "7"), (8, "8"), (9, "9"), (10, "10"), (11, "11"), (12, "12"),
                                          (13, "13"), (14, "14"), (100, "15+")], validate_choice=False)
 
-    rent_sell = SelectField('', choices=[(0, rent_sell_name1), (1, rent_sell_name2)])
+    rent_sell = SelectField('', choices=[(0, "Sprzedaż"), (1, "Wynajem")])
 
     submit = SubmitField('Filter')
 
 
+class FilterFormEng(FlaskForm):
+
+    min_rooms = SelectField('', choices=[(0, "Min rooms"), (1, "1"), (2, "2"), (3, "3"), (4, "4"), (5, "5+")],
+                            validate_choice=False)
+
+    max_rooms = SelectField('', choices=[(1001, "Max rooms"), (1, "1"), (2, "2"), (3, "3"), (4, "4"), (100, "5+")],
+                            validate_choice=False)
+
+    min_area = SelectField('', choices=[(0, "Min m2"), (10, "10m2"), (20, "20m2"), (30, "30m2"), (40, "40m2"),
+                                        (50, "50m2"), (60, "60m2"), (70, "70m2"), (80, "80m2"), (90, "90m2"),
+                                        (100, "100m2"), (110, "110m2"), (120, "120m2"), (130, "130m2"), (140, "140m2"),
+                                        (150, "150m2+")], validate_choice=False)
+
+    max_area = SelectField('', choices=[(1001, "Max m2"), (10, "10m2"), (20, "20m2"), (30, "30m2"), (40, "40m2"),
+                                        (50, "50m2"), (60, "60m2"), (70, "70m2"), (80, "80m2"), (90, "90m2"),
+                                        (100, "100m2"), (110, "110m2"), (120, "120m2"), (130, "130m2"), (140, "140m2"),
+                                        (1000, "150m2+")], validate_choice=False)
+
+    min_area_land = SelectField('', choices=[(0, "Min m2"), (500, "500m2"), (1000, "1000m2"), (1500, "1500m2"),
+                                             (2000, "2000m2"), (2500, "2500m2"), (3000, "3000m2"), (3500, "3500m2"),
+                                             (4000, "4000m2"), (4500, "4500m2"), (5000, "5000m2"), (5000, "5000m2+")],
+                                validate_choice=False)
+
+    max_area_land = SelectField('', choices=[(100000, "Max m2"), (500, "500m2"), (1000, "1000m2"), (1500, "1500m2"),
+                                             (2000, "2000m2"), (2500, "2500m2"), (3000, "3000m2"), (3500, "3500m2"),
+                                             (4000, "4000m2"), (4500, "4500m2"), (5000, "5000m2"), (100000, "5000m2+")],
+                                validate_choice=False)
+
+    min_area_house = SelectField('', choices=[(0, "Min m2"), (50, "50m2"), (100, "100m2"), (150, "150m2"),
+                                              (200, "200m2"),  (250, "250m2"), (300, "300m2"), (350, "350m2"),
+                                              (400, "400m2"), (450, "450m2+")], validate_choice=False)
+
+    max_area_house = SelectField('', choices=[(10000, "Max m2"), (50, "50m2"), (100, "100m2"), (150, "150m2"),
+                                              (200, "200m2"), (250, "250m2"), (300, "300m2"), (350, "350m2"),
+                                              (400, "400m2"), (100000, "450m2+")], validate_choice=False)
+
+    min_floor = SelectField('', choices=[(0, "Min floor"), (1, "1"), (2, "2"), (3, "3"), (4, "4"), (5, "5"),
+                                         (6, "6"), (7, "7"), (8, "8"), (9, "9"), (10, "10"), (11, "11"), (12, "12"),
+                                         (13, "13"), (14, "14"), (15, "15+")], validate_choice=False)
+
+    max_floor = SelectField('', choices=[(101, "Max floor"), (1, "1"), (2, "2"), (3, "3"), (4, "4"), (5, "5"),
+                                         (6, "6"), (7, "7"), (8, "8"), (9, "9"), (10, "10"), (11, "11"), (12, "12"),
+                                         (13, "13"), (14, "14"), (100, "15+")], validate_choice=False)
+
+    rent_sell = SelectField('', choices=[(0, "Sell"), (1, "Rent")])
+
+    submit = SubmitField('Filter')
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
     POSTGRES_DATABASE_HOST_ADDRESS = os.environ.get('POSTGRES_DATABASE_HOST_ADDRESS')
@@ -291,26 +332,25 @@ def index():
     session['language'] = 'pl'
     return redirect('krakow')
 
-
 @app.route('/en')
 def index_eng():
     session['language'] = "eng"
     return redirect('krakow')
 
-
 @app.route('/krakow', methods=['GET', 'POST'])
 def krakow_flat():
     if session['language'] == 'pl':
         page = 'index.html'
+        form = FilterForm()
     else:
         page = 'index_eng.html'
-    form = FilterForm()
+        form = FilterFormEng()
     validation_if_min_greater_than_max(form)
     if form.validate_on_submit():
         return render_template(page, data=filter_select('krakow', form.min_rooms.data,
-                                                        form.max_rooms.data, form.min_area.data,
-                                                        form.max_area.data, form.min_floor.data,
-                                                        form.max_floor.data, form.rent_sell.data), form=form,
+                                                                form.max_rooms.data, form.min_area.data,
+                                                                form.max_area.data, form.min_floor.data,
+                                                                form.max_floor.data, form.rent_sell.data), form=form,
                                house=False, land=False, city='krakow')
     return render_template(page, data=filter_select('krakow', 0, 100,
                                                             0, 10000, 0, 100,
@@ -322,9 +362,10 @@ def krakow_flat():
 def krakow_house():
     if session['language'] == 'pl':
         page = 'index.html'
+        form = FilterForm()
     else:
         page = 'index_eng.html'
-    form = FilterForm()
+        form = FilterFormEng()
     if form.is_submitted():
         return render_template(page, data=filter_select('krakow_house',
                                                                 form.min_rooms.data, form.max_rooms.data,
@@ -341,9 +382,10 @@ def krakow_house():
 def krakow_land():
     if session['language'] == 'pl':
         page = 'index.html'
+        form = FilterForm()
     else:
         page = 'index_eng.html'
-    form = FilterForm()
+        form = FilterFormEng()
     if form.is_submitted():
         print("yes its validates")
         return render_template(page, data=filter_select('krakow_land', 0,
@@ -361,9 +403,10 @@ def krakow_land():
 def warszawa_flat():
     if session['language'] == 'pl':
         page = 'index.html'
+        form = FilterForm()
     else:
         page = 'index_eng.html'
-    form = FilterForm()
+        form = FilterFormEng()
     validation_if_min_greater_than_max(form)
     if form.validate_on_submit():
         return render_template(page, data=filter_select('warszawa', form.min_rooms.data,
@@ -381,9 +424,10 @@ def warszawa_flat():
 def warszawa_house():
     if session['language'] == 'pl':
         page = 'index.html'
+        form = FilterForm()
     else:
         page = 'index_eng.html'
-    form = FilterForm()
+        form = FilterFormEng()
     if form.is_submitted():
         return render_template(page, data=filter_select('warszawa_house',
                                                                 form.min_rooms.data, form.max_rooms.data,
@@ -400,9 +444,10 @@ def warszawa_house():
 def warszawa_land():
     if session['language'] == 'pl':
         page = 'index.html'
+        form = FilterForm()
     else:
         page = 'index_eng.html'
-    form = FilterForm()
+        form = FilterFormEng()
     if form.is_submitted():
         print("yes its validates")
         return render_template(page, data=filter_select('warszawa_land', 0,

@@ -182,12 +182,39 @@ color: #212529;
 display: flex;
 justify-content: center;
 align-items: center;
+
 }
 
 .main-menu{
 display: flex;
 justify-content: center;
 align-items: center;
+}
+
+.icon-languages-div{
+    position: absolute;
+    right: 3vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.icon-languages{
+    width: 4vh;
+    height: 4vh;
+    margin-left: 10px;
+    cursor: pointer;
+
+}
+
+#languages-to-choose{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: default;
+    pointer-events: none;
+
 }
 
 #a-menu {
@@ -340,3 +367,4 @@ align-items: center;
         transform: translate(0, 0);
     }
 }
+

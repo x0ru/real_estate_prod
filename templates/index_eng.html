@@ -7,8 +7,6 @@
 
     {% include 'logo_eng.html' %}
 
-    <a class="btn" id="english-language" href="{{url_for('index_eng')}}">Eng</a>
-    <a class="btn" id="polish-language" href="{{url_for('index')}}">Pl</a>
     {% include 'filter.html' %}
     <!-- Checking if any records are fetched otherwise return no record page -->
     {% if data[1]|length > 0 %}

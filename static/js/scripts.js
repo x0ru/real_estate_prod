@@ -3,20 +3,36 @@ const menuCityWarszawa = document.getElementById("hide-main-warszawa");
 const menuCityKrakow = document.getElementById("hide-main-krakow");
 const menuKrakow = document.getElementById("hide-krakow");
 const menuWarszawa = document.getElementById("hide-warszawa");
-
+const languageMenu = document.getElementById("language-menu");
+const languagesToChoose = document.getElementById('languages-to-choose');
 
 menuKrakow.style.opacity = '0';
 menuWarszawa.style.opacity = '0';
 menuCityKrakow.style.opacity = '0';
 menuCityWarszawa.style.opacity = '0';
+languagesToChoose.style.opacity = '0';
 
-menu.addEventListener('click', hideShowMainWarszawa, false);
-menu.addEventListener('click', hideShowMainKrakow, false);
-menuCityWarszawa.addEventListener('click', hideShowWarszawa, false);
-menuCityKrakow.addEventListener('click', hideShowKrakow, false);
+menu.addEventListener('click', hideShowMainWarszawa);
+menu.addEventListener('click', hideShowMainKrakow);
+menuCityWarszawa.addEventListener('click', hideShowWarszawa);
+menuCityKrakow.addEventListener('click', hideShowKrakow);
+languageMenu.addEventListener('click', hideShowLanguages);
 
 
 
+function hideShowLanguages() {
+   languagesToChoose.classList.remove('play-anim-right');
+   if(languagesToChoose.style.opacity === '0'){
+      languagesToChoose.classList.add('play-anim-right')
+      languagesToChoose.style.opacity = '1';
+      languagesToChoose.style.cursor = 'pointer';
+      languagesToChoose.style.pointerEvents = 'auto';
+   } else {
+      languagesToChoose.style.opacity = '0';
+      languagesToChoose.style.cursor = 'default';
+      languagesToChoose.style.pointerEvents = 'none';
+   }
+}
 function hideShowMainKrakow() {
    menuCityKrakow.classList.remove('play-anim-right');
    if(menuCityKrakow.style.opacity === '0'){
