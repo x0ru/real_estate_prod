@@ -121,7 +121,7 @@ def filter_select(city, min_rooms, max_rooms, min_area, max_area, min_floor, max
     # db_info = "host='%s' dbname='%s' user='%s' password='%s' sslmode='require'  port='%s'" % (
     #     POSTGRES_DATABASE_HOST_ADDRESS, POSTGRES_DATABASE_NAME, POSTGRES_USERNAME, POSTGRES_PASSWORD,
     #     POSTGRES_CONNECTION_PORT)
-    con = psycopg2.connect('DATABASE_URL')
+    con = psycopg2.connect(os.environ.get('DATABASE_URL'))
     cur = con.cursor()
 
 
