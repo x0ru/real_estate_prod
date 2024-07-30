@@ -273,5 +273,5 @@ def deleting_duplicates(city, rents, rooms):
     con.commit()
 
 
-# land_sell(cities["warszawa_land"])
+land_sell(cities["warszawa_land"])
 # deleting_duplicates(cities['warszawa_land'][1], "", "")

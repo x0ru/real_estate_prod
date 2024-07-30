@@ -112,17 +112,19 @@ class FilterFormEng(FlaskForm):
 
 def filter_select(city, min_rooms, max_rooms, min_area, max_area, min_floor, max_floor, rent_sell):
 
-    POSTGRES_DATABASE_HOST_ADDRESS = os.environ.get('POSTGRES_DATABASE_HOST_ADDRESS')
-    POSTGRES_DATABASE_NAME = os.environ.get('POSTGRES_DATABASE_NAME')
-    POSTGRES_USERNAME = os.environ.get('POSTGRES_USERNAME')
-    POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD')
-    POSTGRES_CONNECTION_PORT = "5432"
-
-    db_info = "host='%s' dbname='%s' user='%s' password='%s' sslmode='require'  port='%s'" % (
-        POSTGRES_DATABASE_HOST_ADDRESS, POSTGRES_DATABASE_NAME, POSTGRES_USERNAME, POSTGRES_PASSWORD,
-        POSTGRES_CONNECTION_PORT)
-    con = psycopg2.connect(db_info)
+    # POSTGRES_DATABASE_HOST_ADDRESS = os.environ.get('POSTGRES_DATABASE_HOST_ADDRESS')
+    # POSTGRES_DATABASE_NAME = os.environ.get('POSTGRES_DATABASE_NAME')
+    # POSTGRES_USERNAME = os.environ.get('POSTGRES_USERNAME')
+    # POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD')
+    # POSTGRES_CONNECTION_PORT = "5432"
+    #
+    # db_info = "host='%s' dbname='%s' user='%s' password='%s' sslmode='require'  port='%s'" % (
+    #     POSTGRES_DATABASE_HOST_ADDRESS, POSTGRES_DATABASE_NAME, POSTGRES_USERNAME, POSTGRES_PASSWORD,
+    #     POSTGRES_CONNECTION_PORT)
+    con = psycopg2.connect('DATABASE_URL')
     cur = con.cursor()
+
+
 
     statement = f'''SELECT 
                                 district,
@@ -334,10 +336,10 @@ def index_eng():
 def krakow_flat():
     if session['language'] == 'pl':
         page = 'index.html'
-        form = FilterForm()
+        form = FilterForm('pl')
     else:
         page = 'index_eng.html'
-        form = FilterFormEng()
+        form = FilterForm('eng')
     validation_if_min_greater_than_max(form)
     if form.validate_on_submit():
         return render_template(page, data=filter_select('krakow', form.min_rooms.data,
